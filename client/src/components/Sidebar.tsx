@@ -43,7 +43,7 @@ export function Sidebar() {
               : "text-muted-foreground hover:bg-white/5 hover:text-white"
           )}
         >
-          <Send className="w-5 h-5" />
+          <Send className="w-5 h-5 text-primary" />
           <span className="hidden lg:block font-medium">Telegram Farm</span>
         </Button>
         
@@ -56,7 +56,7 @@ export function Sidebar() {
               : "text-muted-foreground hover:bg-white/5 hover:text-white"
           )}
         >
-          <Chrome className="w-5 h-5" />
+          <Chrome className="w-5 h-5 text-primary" />
           <span className="hidden lg:block font-medium">Chrome Farm</span>
         </Button>
       </div>
@@ -74,7 +74,7 @@ export function Sidebar() {
           )}>
             <item.icon className={cn(
               "w-5 h-5 transition-transform duration-300 group-hover:scale-110",
-              location === item.href && "text-primary"
+              "text-primary"
             )} />
             <span className="hidden lg:block font-medium">{item.label}</span>
             
