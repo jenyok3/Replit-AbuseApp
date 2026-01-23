@@ -37,9 +37,9 @@ export function Sidebar() {
       </button>
 
       {/* Header / Logo Area */}
-      <div className="h-20 flex items-center border-b border-white/5 overflow-hidden px-5">
-        <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20 shrink-0">
-          <Bug className="text-white w-6 h-6" />
+      <div className="h-24 flex items-center justify-center border-b border-white/5 overflow-hidden">
+        <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20 shrink-0">
+          <Bug className="text-white w-7 h-7" />
         </div>
         <span className={cn(
           "font-display font-bold text-lg tracking-wide transition-all duration-300 whitespace-nowrap overflow-hidden",
@@ -50,7 +50,7 @@ export function Sidebar() {
       </div>
 
       {/* Farm Type Switcher */}
-      <div className="p-4 space-y-2">
+      <div className="pt-8 px-4 space-y-6">
         <Button 
           variant="ghost" 
           className={cn(
@@ -66,7 +66,7 @@ export function Sidebar() {
           </div>
           <span className={cn(
             "font-medium transition-all duration-300 whitespace-nowrap overflow-hidden text-left",
-            isExpanded ? "opacity-100 w-auto" : "opacity-0 w-0"
+            isExpanded ? "opacity-100 w-auto ml-1" : "opacity-0 w-0"
           )}>Telegram</span>
         </Button>
         
@@ -85,15 +85,15 @@ export function Sidebar() {
           </div>
           <span className={cn(
             "font-medium transition-all duration-300 whitespace-nowrap overflow-hidden text-left",
-            isExpanded ? "opacity-100 w-auto" : "opacity-0 w-0"
+            isExpanded ? "opacity-100 w-auto ml-1" : "opacity-0 w-0"
           )}>Chrome</span>
         </Button>
       </div>
 
-      <div className="h-px bg-white/5 mx-4 my-2" />
+      <div className="flex-1" />
 
       {/* Navigation */}
-      <nav className="flex-1 p-4 space-y-2">
+      <nav className="p-4 mb-4">
         {navItems.map((item) => (
           <Link key={item.href} href={item.href} className={cn(
             "flex items-center h-12 rounded-xl transition-all duration-200 group relative overflow-hidden p-0",
@@ -110,7 +110,7 @@ export function Sidebar() {
             </div>
             <span className={cn(
               "font-medium transition-all duration-300 whitespace-nowrap overflow-hidden text-left",
-              isExpanded ? "opacity-100 w-auto" : "opacity-0 w-0"
+              isExpanded ? "opacity-100 w-auto ml-1" : "opacity-0 w-0"
             )}>{item.label}</span>
             
             {location === item.href && (
