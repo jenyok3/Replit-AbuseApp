@@ -45,7 +45,7 @@ export function Sidebar() {
           "ml-3 font-display font-bold text-lg tracking-wide transition-opacity duration-300 whitespace-nowrap",
           isExpanded ? "opacity-100" : "opacity-0 pointer-events-none"
         )}>
-          FARM<span className="text-primary">.OS</span>
+          ABUSE<span className="text-primary"> APP</span>
         </span>
       </div>
 
@@ -65,7 +65,7 @@ export function Sidebar() {
           <span className={cn(
             "font-medium transition-opacity duration-300 whitespace-nowrap",
             isExpanded ? "opacity-100" : "opacity-0 w-0"
-          )}>Telegram Farm</span>
+          )}>Telegram</span>
         </Button>
         
         <Button 
@@ -82,7 +82,7 @@ export function Sidebar() {
           <span className={cn(
             "font-medium transition-opacity duration-300 whitespace-nowrap",
             isExpanded ? "opacity-100" : "opacity-0 w-0"
-          )}>Chrome Farm</span>
+          )}>Chrome</span>
         </Button>
       </div>
 
