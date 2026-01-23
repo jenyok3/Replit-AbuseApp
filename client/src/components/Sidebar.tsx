@@ -1,13 +1,12 @@
 import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import { 
-  Home, 
   Settings, 
   Send, 
   Chrome, 
   Users, 
   LogOut,
-  LayoutGrid
+  Bug
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -24,8 +23,8 @@ export function Sidebar() {
     <div className="w-20 lg:w-64 h-screen border-r border-white/5 bg-black/95 flex flex-col shrink-0 transition-all duration-300">
       {/* Header / Logo Area */}
       <div className="h-20 flex items-center justify-center lg:justify-start lg:px-6 border-b border-white/5">
-        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-purple-900 flex items-center justify-center shadow-lg shadow-primary/20">
-          <LayoutGrid className="text-white w-6 h-6" />
+        <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
+          <Bug className="text-white w-6 h-6" />
         </div>
         <span className="ml-3 font-display font-bold text-lg hidden lg:block tracking-wide">
           FARM<span className="text-primary">.OS</span>
