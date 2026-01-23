@@ -45,7 +45,7 @@ export function Sidebar() {
           "ml-3 font-display font-bold text-lg tracking-wide transition-opacity duration-300 whitespace-nowrap",
           isExpanded ? "opacity-100" : "opacity-0 pointer-events-none"
         )}>
-          ABUSE<span className="text-primary"> APP</span>
+          Abuse<span className="text-primary">App</span>
         </span>
       </div>
 
