@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import { 
@@ -6,27 +7,44 @@ import {
   Chrome, 
   Users, 
   LogOut,
-  Bug
+  Bug,
+  ChevronRight,
+  ChevronLeft
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function Sidebar() {
   const [location] = useLocation();
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const navItems = [
-    { icon: Settings, label: "Settings", href: "/settings" },
+    { icon: Settings, label: "Налаштування", href: "/settings" },
   ];
 
   const type = "telegram"; // This could be state-driven
 
   return (
-    <div className="w-20 lg:w-64 h-screen border-r border-white/5 bg-black/95 flex flex-col shrink-0 transition-all duration-300">
+    <div className={cn(
+      "h-screen border-r border-white/5 bg-black/95 flex flex-col shrink-0 transition-all duration-300 relative",
+      isExpanded ? "w-64" : "w-20"
+    )}>
+      {/* Toggle Button */}
+      <button 
+        onClick={() => setIsExpanded(!isExpanded)}
+        className="absolute -right-3 top-24 w-6 h-6 rounded-full bg-primary border border-white/10 flex items-center justify-center z-50 text-white hover:scale-110 transition-transform"
+      >
+        {isExpanded ? <ChevronLeft className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+      </button>
+
       {/* Header / Logo Area */}
-      <div className="h-20 flex items-center justify-center lg:justify-start lg:px-6 border-b border-white/5">
-        <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
+      <div className="h-20 flex items-center px-6 border-b border-white/5 overflow-hidden">
+        <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20 shrink-0">
           <Bug className="text-white w-6 h-6" />
         </div>
-        <span className="ml-3 font-display font-bold text-lg hidden lg:block tracking-wide">
+        <span className={cn(
+          "ml-3 font-display font-bold text-lg tracking-wide transition-opacity duration-300 whitespace-nowrap",
+          isExpanded ? "opacity-100" : "opacity-0 pointer-events-none"
+        )}>
           FARM<span className="text-primary">.OS</span>
         </span>
       </div>
@@ -36,27 +54,35 @@ export function Sidebar() {
         <Button 
           variant="ghost" 
           className={cn(
-            "w-full justify-center lg:justify-start gap-3 h-12 rounded-xl transition-all",
+            "w-full h-12 rounded-xl transition-all flex items-center overflow-hidden",
+            isExpanded ? "justify-start px-3 gap-3" : "justify-center px-0",
             type === "telegram" 
               ? "bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20" 
               : "text-muted-foreground hover:bg-white/5 hover:text-white"
           )}
         >
-          <Send className="w-5 h-5 text-primary" />
-          <span className="hidden lg:block font-medium">Telegram Farm</span>
+          <Send className="w-5 h-5 text-primary shrink-0" />
+          <span className={cn(
+            "font-medium transition-opacity duration-300 whitespace-nowrap",
+            isExpanded ? "opacity-100" : "opacity-0 w-0"
+          )}>Telegram Farm</span>
         </Button>
         
         <Button 
           variant="ghost" 
           className={cn(
-            "w-full justify-center lg:justify-start gap-3 h-12 rounded-xl transition-all",
+            "w-full h-12 rounded-xl transition-all flex items-center overflow-hidden",
+            isExpanded ? "justify-start px-3 gap-3" : "justify-center px-0",
             type === "chrome" 
               ? "bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20" 
               : "text-muted-foreground hover:bg-white/5 hover:text-white"
           )}
         >
-          <Chrome className="w-5 h-5 text-primary" />
-          <span className="hidden lg:block font-medium">Chrome Farm</span>
+          <Chrome className="w-5 h-5 text-primary shrink-0" />
+          <span className={cn(
+            "font-medium transition-opacity duration-300 whitespace-nowrap",
+            isExpanded ? "opacity-100" : "opacity-0 w-0"
+          )}>Chrome Farm</span>
         </Button>
       </div>
 
@@ -66,16 +92,20 @@ export function Sidebar() {
       <nav className="flex-1 p-4 space-y-2">
         {navItems.map((item) => (
           <Link key={item.href} href={item.href} className={cn(
-            "flex items-center justify-center lg:justify-start gap-3 px-3 py-3 rounded-xl transition-all duration-200 group relative overflow-hidden",
+            "flex items-center h-12 rounded-xl transition-all duration-200 group relative overflow-hidden",
+            isExpanded ? "justify-start px-3 gap-3" : "justify-center px-0",
             location === item.href 
               ? "text-white bg-white/5 shadow-inner" 
               : "text-muted-foreground hover:text-white hover:bg-white/5"
           )}>
             <item.icon className={cn(
-              "w-5 h-5 transition-transform duration-300 group-hover:scale-110",
+              "w-5 h-5 transition-transform duration-300 group-hover:scale-110 shrink-0",
               "text-primary"
             )} />
-            <span className="hidden lg:block font-medium">{item.label}</span>
+            <span className={cn(
+              "font-medium transition-opacity duration-300 whitespace-nowrap",
+              isExpanded ? "opacity-100" : "opacity-0 w-0"
+            )}>{item.label}</span>
             
             {location === item.href && (
               <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-r-full" />
@@ -86,13 +116,16 @@ export function Sidebar() {
 
       {/* Footer / User Profile */}
       <div className="p-4 border-t border-white/5">
-        <button className="flex items-center justify-center lg:justify-start gap-3 w-full p-2 rounded-xl hover:bg-white/5 transition-colors group">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-zinc-700 to-zinc-600 border border-white/10" />
-          <div className="hidden lg:flex flex-col items-start overflow-hidden">
+        <button className="flex items-center gap-3 w-full p-2 rounded-xl hover:bg-white/5 transition-colors group overflow-hidden">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-zinc-700 to-zinc-600 border border-white/10 shrink-0" />
+          <div className={cn(
+            "flex flex-col items-start overflow-hidden transition-opacity duration-300",
+            isExpanded ? "opacity-100" : "opacity-0 w-0"
+          )}>
             <span className="text-sm font-medium text-white truncate w-full">Administrator</span>
             <span className="text-xs text-muted-foreground">admin@farm.os</span>
           </div>
-          <LogOut className="w-4 h-4 ml-auto text-muted-foreground group-hover:text-red-400 hidden lg:block" />
+          {isExpanded && <LogOut className="w-4 h-4 ml-auto text-muted-foreground group-hover:text-red-400" />}
         </button>
       </div>
     </div>
