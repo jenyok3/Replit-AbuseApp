@@ -54,14 +54,16 @@ export function Sidebar() {
         <Button 
           variant="ghost" 
           className={cn(
-            "w-full h-12 rounded-xl transition-all flex items-center overflow-hidden px-2",
-            isExpanded ? "justify-start gap-3" : "justify-center",
+            "w-full h-12 rounded-xl transition-all flex items-center overflow-hidden px-0",
+            isExpanded ? "justify-start px-3 gap-3" : "justify-center",
             type === "telegram" 
               ? "bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20" 
               : "text-muted-foreground hover:bg-white/5 hover:text-white"
           )}
         >
-          <Send className="w-6 h-6 text-primary shrink-0" />
+          <div className="w-10 h-10 flex items-center justify-center shrink-0">
+            <Send className="w-6 h-6 text-primary" />
+          </div>
           <span className={cn(
             "font-medium transition-all duration-300 whitespace-nowrap overflow-hidden text-left",
             isExpanded ? "opacity-100 w-auto" : "opacity-0 w-0"
@@ -71,14 +73,16 @@ export function Sidebar() {
         <Button 
           variant="ghost" 
           className={cn(
-            "w-full h-12 rounded-xl transition-all flex items-center overflow-hidden px-2",
-            isExpanded ? "justify-start gap-3" : "justify-center",
+            "w-full h-12 rounded-xl transition-all flex items-center overflow-hidden px-0",
+            isExpanded ? "justify-start px-3 gap-3" : "justify-center",
             type === "chrome" 
               ? "bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20" 
               : "text-muted-foreground hover:bg-white/5 hover:text-white"
           )}
         >
-          <Chrome className="w-6 h-6 text-primary shrink-0" />
+          <div className="w-10 h-10 flex items-center justify-center shrink-0">
+            <Chrome className="w-6 h-6 text-primary" />
+          </div>
           <span className={cn(
             "font-medium transition-all duration-300 whitespace-nowrap overflow-hidden text-left",
             isExpanded ? "opacity-100 w-auto" : "opacity-0 w-0"
