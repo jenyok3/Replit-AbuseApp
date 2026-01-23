@@ -37,13 +37,13 @@ export function Sidebar() {
       </button>
 
       {/* Header / Logo Area */}
-      <div className="h-20 flex items-center px-6 border-b border-white/5 overflow-hidden">
+      <div className="h-20 flex items-center justify-center border-b border-white/5 overflow-hidden px-4">
         <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20 shrink-0">
           <Bug className="text-white w-6 h-6" />
         </div>
         <span className={cn(
-          "ml-3 font-display font-bold text-lg tracking-wide transition-opacity duration-300 whitespace-nowrap",
-          isExpanded ? "opacity-100" : "opacity-0 pointer-events-none"
+          "font-display font-bold text-lg tracking-wide transition-all duration-300 whitespace-nowrap overflow-hidden",
+          isExpanded ? "ml-3 opacity-100 w-auto" : "ml-0 opacity-0 w-0"
         )}>
           Abuse<span className="text-primary">App</span>
         </span>
@@ -61,10 +61,12 @@ export function Sidebar() {
               : "text-muted-foreground hover:bg-white/5 hover:text-white"
           )}
         >
-          <Send className="w-5 h-5 text-primary shrink-0" />
+          <div className="w-10 flex items-center justify-center shrink-0">
+            <Send className="w-5 h-5 text-primary" />
+          </div>
           <span className={cn(
-            "font-medium transition-opacity duration-300 whitespace-nowrap",
-            isExpanded ? "opacity-100" : "opacity-0 w-0"
+            "font-medium transition-all duration-300 whitespace-nowrap overflow-hidden text-left",
+            isExpanded ? "opacity-100 w-auto" : "opacity-0 w-0"
           )}>Telegram</span>
         </Button>
         
@@ -78,10 +80,12 @@ export function Sidebar() {
               : "text-muted-foreground hover:bg-white/5 hover:text-white"
           )}
         >
-          <Chrome className="w-5 h-5 text-primary shrink-0" />
+          <div className="w-10 flex items-center justify-center shrink-0">
+            <Chrome className="w-5 h-5 text-primary" />
+          </div>
           <span className={cn(
-            "font-medium transition-opacity duration-300 whitespace-nowrap",
-            isExpanded ? "opacity-100" : "opacity-0 w-0"
+            "font-medium transition-all duration-300 whitespace-nowrap overflow-hidden text-left",
+            isExpanded ? "opacity-100 w-auto" : "opacity-0 w-0"
           )}>Chrome</span>
         </Button>
       </div>
@@ -98,13 +102,15 @@ export function Sidebar() {
               ? "text-white bg-white/5 shadow-inner" 
               : "text-muted-foreground hover:text-white hover:bg-white/5"
           )}>
-            <item.icon className={cn(
-              "w-5 h-5 transition-transform duration-300 group-hover:scale-110 shrink-0",
-              "text-primary"
-            )} />
+            <div className="w-10 flex items-center justify-center shrink-0">
+              <item.icon className={cn(
+                "w-5 h-5 transition-transform duration-300 group-hover:scale-110",
+                "text-primary"
+              )} />
+            </div>
             <span className={cn(
-              "font-medium transition-opacity duration-300 whitespace-nowrap",
-              isExpanded ? "opacity-100" : "opacity-0 w-0"
+              "font-medium transition-all duration-300 whitespace-nowrap overflow-hidden text-left",
+              isExpanded ? "opacity-100 w-auto" : "opacity-0 w-0"
             )}>{item.label}</span>
             
             {location === item.href && (
@@ -116,16 +122,18 @@ export function Sidebar() {
 
       {/* Footer / User Profile */}
       <div className="p-4 border-t border-white/5">
-        <button className="flex items-center gap-3 w-full p-2 rounded-xl hover:bg-white/5 transition-colors group overflow-hidden">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-zinc-700 to-zinc-600 border border-white/10 shrink-0" />
-          <div className={cn(
-            "flex flex-col items-start overflow-hidden transition-opacity duration-300",
-            isExpanded ? "opacity-100" : "opacity-0 w-0"
-          )}>
-            <span className="text-sm font-medium text-white truncate w-full">Administrator</span>
-            <span className="text-xs text-muted-foreground">admin@farm.os</span>
+        <button className="flex items-center h-12 w-full rounded-xl hover:bg-white/5 transition-colors group overflow-hidden">
+          <div className="w-10 shrink-0 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-zinc-700 to-zinc-600 border border-white/10" />
           </div>
-          {isExpanded && <LogOut className="w-4 h-4 ml-auto text-muted-foreground group-hover:text-red-400" />}
+          <div className={cn(
+            "flex flex-col items-start overflow-hidden transition-all duration-300",
+            isExpanded ? "opacity-100 w-auto ml-3" : "opacity-0 w-0 ml-0"
+          )}>
+            <span className="text-sm font-medium text-white truncate w-full text-left">Admin</span>
+            <span className="text-xs text-muted-foreground truncate w-full text-left">admin@abuse.app</span>
+          </div>
+          {isExpanded && <LogOut className="w-4 h-4 ml-auto mr-3 text-muted-foreground group-hover:text-red-400" />}
         </button>
       </div>
     </div>
