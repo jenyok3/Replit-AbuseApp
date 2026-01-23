@@ -62,7 +62,7 @@ export function Sidebar() {
           )}
         >
           <div className="w-12 h-12 flex items-center justify-center shrink-0">
-            <Send className="w-6 h-6 text-primary" />
+            <Send className="w-5 h-5 text-primary" />
           </div>
           <span className={cn(
             "font-medium transition-all duration-300 whitespace-nowrap overflow-hidden text-left",
@@ -81,7 +81,7 @@ export function Sidebar() {
           )}
         >
           <div className="w-12 h-12 flex items-center justify-center shrink-0">
-            <Chrome className="w-6 h-6 text-primary" />
+            <Chrome className="w-5 h-5 text-primary" />
           </div>
           <span className={cn(
             "font-medium transition-all duration-300 whitespace-nowrap overflow-hidden text-left",
@@ -104,7 +104,7 @@ export function Sidebar() {
           )}>
             <div className="w-12 h-12 flex items-center justify-center shrink-0">
               <item.icon className={cn(
-                "w-6 h-6 transition-transform duration-300 group-hover:scale-110",
+                "w-5 h-5 transition-transform duration-300 group-hover:scale-110",
                 "text-primary"
               )} />
             </div>
