@@ -15,7 +15,6 @@ export function Sidebar() {
   const [location] = useLocation();
 
   const navItems = [
-    { icon: Users, label: "Projects", href: "/projects" },
     { icon: Settings, label: "Settings", href: "/settings" },
   ];
 
