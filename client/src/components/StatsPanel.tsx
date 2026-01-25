@@ -1,6 +1,6 @@
 import { useStats } from "@/hooks/use-dashboard";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
-import { Activity, ShieldCheck, ShieldAlert, Layers } from "lucide-react";
+import { Activity, ShieldCheck, Ghost, Layers } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function StatsPanel() {
@@ -8,7 +8,7 @@ export function StatsPanel() {
 
   const chartData = [
     { name: "Live", value: stats?.liveAccounts || 0, color: "#22c55e" },
-    { name: "Blocked", value: stats?.blockedAccounts || 0, color: "#ef4444" },
+    { name: "Blocked", value: stats?.blockedAccounts || 0, color: "#64748b" },
   ];
 
   if (isLoading) {
@@ -56,7 +56,7 @@ export function StatsPanel() {
             <span className="text-xl font-mono font-bold text-white">{stats?.liveAccounts || 0}</span>
           </div>
           <div className="flex items-center gap-3">
-            <ShieldAlert className="w-5 h-5 text-red-500" />
+            <Ghost className="w-5 h-5 text-slate-400" />
             <span className="text-xl font-mono font-bold text-white">{stats?.blockedAccounts || 0}</span>
           </div>
         </div>
