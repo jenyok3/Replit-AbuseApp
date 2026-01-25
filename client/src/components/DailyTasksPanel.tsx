@@ -55,7 +55,7 @@ export function DailyTasksPanel() {
                 />
                 <span className={cn(
                   "flex-1 text-sm transition-all duration-300",
-                  task.isCompleted ? "text-muted-foreground line-through decoration-primary/50" : "text-white"
+                  task.isCompleted ? "text-muted-foreground line-through decoration-primary decoration-2" : "text-white"
                 )}>
                   {task.title}
                 </span>
