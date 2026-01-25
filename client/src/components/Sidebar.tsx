@@ -18,6 +18,7 @@ export function Sidebar() {
   ];
 
   const isSettingsActive = location === "/settings";
+  const isDashboardActive = location === "/";
   const type: "telegram" | "chrome" = "telegram"; // This could be state-driven
 
   return (
@@ -34,34 +35,36 @@ export function Sidebar() {
 
       {/* Farm Type Switcher */}
       <div className="p-4 space-y-2">
-        <Button 
-          variant="ghost" 
-          className={cn(
-            "w-full justify-center lg:justify-start gap-3 h-12 rounded-xl transition-all relative overflow-hidden",
-            !isSettingsActive && type === "telegram" 
-              ? "bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20" 
-              : "text-muted-foreground hover:bg-white/5 hover:text-white"
-          )}
-        >
-          <Send className="w-5 h-5 text-primary" />
-          <span className="hidden lg:block font-medium">Telegram</span>
-          {!isSettingsActive && type === "telegram" && (
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-r-full" />
-          )}
-        </Button>
+        <Link href="/">
+          <Button 
+            variant="ghost" 
+            className={cn(
+              "w-full justify-center lg:justify-start gap-3 h-12 rounded-xl transition-all relative overflow-hidden",
+              isDashboardActive && type === "telegram" 
+                ? "bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20" 
+                : "text-muted-foreground hover:bg-white/5 hover:text-white"
+            )}
+          >
+            <Send className="w-5 h-5 text-primary" />
+            <span className="hidden lg:block font-medium">Telegram</span>
+            {isDashboardActive && type === "telegram" && (
+              <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-r-full" />
+            )}
+          </Button>
+        </Link>
         
         <Button 
           variant="ghost" 
           className={cn(
             "w-full justify-center lg:justify-start gap-3 h-12 rounded-xl transition-all relative overflow-hidden",
-            !isSettingsActive && type === "chrome" 
+            false // Chrome section not active for now
               ? "bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20" 
               : "text-muted-foreground hover:bg-white/5 hover:text-white"
           )}
         >
           <Chrome className="w-5 h-5 text-primary" />
           <span className="hidden lg:block font-medium">Chrome</span>
-          {!isSettingsActive && type === "chrome" && (
+          {false && (
             <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-r-full" />
           )}
         </Button>
