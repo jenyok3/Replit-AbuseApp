@@ -79,9 +79,6 @@ export default function Settings() {
 
       <main className="relative z-10 max-w-2xl mx-auto space-y-8 p-4 md:p-6 lg:p-8">
         <div className="flex items-center gap-3 mb-8">
-          <div className="w-12 h-12 rounded-2xl bg-primary/20 flex items-center justify-center border border-primary/30">
-            <SettingsIcon className="w-6 h-6 text-primary" />
-          </div>
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Налаштування</h1>
             <p className="text-muted-foreground">Керування параметрами системи</p>
@@ -97,7 +94,7 @@ export default function Settings() {
           >
             <h2 className="text-xl font-semibold flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-blue-500" />
-              Налаштування Telegram
+              Telegram
             </h2>
             <div className="space-y-4">
               <div className="space-y-2">
@@ -137,7 +134,7 @@ export default function Settings() {
           >
             <h2 className="text-xl font-semibold flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-orange-500" />
-              Налаштування Chrome
+              Chrome
             </h2>
             <div className="space-y-4">
               <div className="space-y-2">
