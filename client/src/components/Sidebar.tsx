@@ -14,7 +14,7 @@ export function Sidebar() {
   const [location] = useLocation();
 
   const navItems = [
-    { icon: Settings, label: "Settings", href: "/settings" },
+    { icon: Settings, label: "Налаштування", href: "/settings" },
   ];
 
   const isSettingsActive = location === "/settings";
