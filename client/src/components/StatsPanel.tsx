@@ -2,9 +2,11 @@ import { useStats } from "@/hooks/use-dashboard";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import { Activity, ShieldCheck, Ghost, Layers } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useLocation } from "wouter";
 
 export function StatsPanel() {
   const { data: stats, isLoading } = useStats();
+  const [, setLocation] = useLocation();
 
   const chartData = [
     { name: "Live", value: stats?.liveAccounts || 0, color: "#22c55e" },
@@ -23,7 +25,11 @@ export function StatsPanel() {
       </h2>
 
       <div className="flex items-center justify-center flex-1 gap-8">
-        <div className="relative w-32 h-32 shrink-0">
+        <div 
+          className="relative w-32 h-32 shrink-0 cursor-pointer hover-elevate rounded-full p-2"
+          onClick={() => setLocation("/accounts")}
+          data-testid="button-stats-chart"
+        >
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
@@ -47,7 +53,11 @@ export function StatsPanel() {
         </div>
 
         <div className="flex flex-col gap-4 justify-center">
-          <div className="flex items-center gap-3">
+          <div 
+            className="flex items-center gap-3 cursor-pointer hover:opacity-80"
+            onClick={() => setLocation("/accounts")}
+            data-testid="link-total-accounts"
+          >
             <Layers className="w-5 h-5 text-muted-foreground" />
             <span className="text-xl font-mono font-bold text-white">{stats?.totalAccounts || 0}</span>
           </div>

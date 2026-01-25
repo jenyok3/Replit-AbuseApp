@@ -16,6 +16,7 @@ export const accounts = pgTable("accounts", {
   name: text("name").notNull(),
   status: text("status").default("live"), // live, blocked
   lastActive: timestamp("last_active").defaultNow(),
+  notes: text("notes"),
 });
 
 export const dailyTasks = pgTable("daily_tasks", {

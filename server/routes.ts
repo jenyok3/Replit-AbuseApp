@@ -58,6 +58,22 @@ export async function registerRoutes(
     }
   });
 
+  app.patch(api.accounts.updateNotes.path, async (req, res) => {
+    try {
+      const { notes } = api.accounts.updateNotes.input.parse(req.body);
+      const account = await storage.updateAccountNotes(Number(req.params.id), notes);
+      res.json(account);
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        return res.status(400).json({
+          message: err.errors[0].message,
+          field: err.errors[0].path.join('.'),
+        });
+      }
+      throw err;
+    }
+  });
+
   // --- Daily Tasks ---
   app.get(api.dailyTasks.list.path, async (_req, res) => {
     const tasks = await storage.getDailyTasks();

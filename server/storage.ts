@@ -17,6 +17,7 @@ export interface IStorage {
 
   // Accounts
   getAccounts(): Promise<Account[]>;
+  updateAccountNotes(id: number, notes: string): Promise<Account>;
   createAccount(account: InsertAccount): Promise<Account>;
 
   // Daily Tasks
@@ -65,6 +66,14 @@ export class DatabaseStorage implements IStorage {
     return newAccount;
   }
 
+  async updateAccountNotes(id: number, notes: string): Promise<Account> {
+    const [updated] = await db.update(accounts)
+      .set({ notes })
+      .where(eq(accounts.id, id))
+      .returning();
+    return updated;
+  }
+
   async getDailyTasks(): Promise<DailyTask[]> {
     return await db.select().from(dailyTasks).orderBy(dailyTasks.id);
   }
@@ -96,7 +105,6 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getStats() {
-    // This is a bit simplified, but good for MVP
     const allAccounts = await db.select().from(accounts);
     const totalAccounts = allAccounts.length;
     const liveAccounts = allAccounts.filter(a => a.status === 'live').length;

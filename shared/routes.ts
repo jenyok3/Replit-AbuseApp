@@ -58,6 +58,15 @@ export const api = {
         400: errorSchemas.validation,
       },
     },
+    updateNotes: {
+      method: 'PATCH' as const,
+      path: '/api/accounts/:id/notes',
+      input: z.object({ notes: z.string() }),
+      responses: {
+        200: z.custom<typeof accounts.$inferSelect>(),
+        404: errorSchemas.notFound,
+      },
+    },
   },
   dailyTasks: {
     list: {
