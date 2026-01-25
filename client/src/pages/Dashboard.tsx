@@ -33,8 +33,8 @@ export default function Dashboard() {
               <LaunchPanel />
             </motion.div>
 
-            {/* Bottom Row - 3 Widgets */}
-            <div className="flex-1 grid grid-cols-1 md:grid-cols-[1fr_280px_280px] gap-6 items-stretch min-h-0">
+            {/* Bottom Row - 2 Widgets */}
+            <div className="flex-1 grid grid-cols-1 md:grid-cols-[1fr_280px] gap-6 items-stretch min-h-0">
               {/* Logs Widget */}
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
@@ -56,28 +56,28 @@ export default function Dashboard() {
               >
                 <AddProjectWidget />
               </motion.div>
-
-              {/* Daily Widget */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.3 }}
-                className="h-full min-h-0"
-              >
-                <DailyTasksPanel />
-              </motion.div>
             </div>
           </div>
 
-          {/* Right Sidebar Column - Stats only */}
+          {/* Right Sidebar Column - Stats & Daily */}
           <div className="flex flex-col gap-6 items-stretch h-full min-h-0">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.4 }}
-              className="h-full"
+              className="flex-none"
             >
               <StatsPanel />
+            </motion.div>
+
+            {/* Daily Widget moved here */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.3 }}
+              className="flex-1 min-h-0"
+            >
+              <DailyTasksPanel />
             </motion.div>
           </div>
 
