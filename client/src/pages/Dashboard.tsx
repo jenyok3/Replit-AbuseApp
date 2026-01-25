@@ -34,7 +34,7 @@ export default function Dashboard() {
             </motion.div>
 
             {/* Bottom Row - 2 Widgets */}
-            <div className="flex-1 grid grid-cols-1 md:grid-cols-[1fr_200px] gap-6 items-stretch min-h-0">
+            <div className="flex-1 grid grid-cols-1 md:grid-cols-[1fr_200px] gap-6 items-end min-h-0">
               {/* Logs Widget */}
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
@@ -47,14 +47,13 @@ export default function Dashboard() {
                 </div>
               </motion.div>
               
-              {/* Square Widget (Add Project) */}
+              {/* Square Widget (Add Project) - No spacer, just items-end on parent */}
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.2 }}
-                className="w-full h-full flex flex-col"
+                className="w-full flex justify-end"
               >
-                <div className="flex-1" />
                 <AddProjectWidget />
               </motion.div>
             </div>
