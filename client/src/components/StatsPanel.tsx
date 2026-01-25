@@ -22,8 +22,8 @@ export function StatsPanel() {
         Статистика акаунтів
       </h2>
 
-      <div className="flex flex-col items-center justify-center flex-1 gap-6">
-        <div className="relative w-32 h-32">
+      <div className="flex items-center justify-center flex-1 gap-8">
+        <div className="relative w-32 h-32 shrink-0">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
@@ -46,18 +46,18 @@ export function StatsPanel() {
           </div>
         </div>
 
-        <div className="flex items-center gap-6 w-full justify-center">
-          <div className="flex items-center gap-2">
+        <div className="flex flex-col gap-4 justify-center">
+          <div className="flex items-center gap-3">
             <Layers className="w-5 h-5 text-muted-foreground" />
-            <span className="text-lg font-mono font-bold text-white">{stats?.totalAccounts || 0}</span>
+            <span className="text-xl font-mono font-bold text-white">{stats?.totalAccounts || 0}</span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <ShieldCheck className="w-5 h-5 text-green-500" />
-            <span className="text-lg font-mono font-bold text-white">{stats?.liveAccounts || 0}</span>
+            <span className="text-xl font-mono font-bold text-white">{stats?.liveAccounts || 0}</span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <ShieldAlert className="w-5 h-5 text-red-500" />
-            <span className="text-lg font-mono font-bold text-white">{stats?.blockedAccounts || 0}</span>
+            <span className="text-xl font-mono font-bold text-white">{stats?.blockedAccounts || 0}</span>
           </div>
         </div>
       </div>
