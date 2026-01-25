@@ -1,6 +1,6 @@
 import { useStats } from "@/hooks/use-dashboard";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
-import { Activity, ShieldCheck, Ban } from "lucide-react";
+import { Activity } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function StatsPanel() {
@@ -24,14 +24,14 @@ export function StatsPanel() {
         Статистика акаунтів
       </h2>
 
-      <div className="flex flex-col md:flex-row items-center justify-between gap-8 h-full">
-        <div className="relative w-48 h-48 md:w-56 md:h-56">
+      <div className="flex items-center justify-center flex-1">
+        <div className="relative w-32 h-32">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
                 data={chartData}
-                innerRadius={60}
-                outerRadius={80}
+                innerRadius={40}
+                outerRadius={55}
                 paddingAngle={5}
                 dataKey="value"
                 stroke="none"
@@ -48,40 +48,8 @@ export function StatsPanel() {
           </ResponsiveContainer>
           
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-            <span className="text-3xl font-bold font-mono text-white">{livePercent}%</span>
+            <span className="text-2xl font-bold font-mono text-white">{livePercent}%</span>
             <span className="text-xs text-muted-foreground uppercase tracking-wider">Live</span>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-4 w-full md:w-auto">
-          <div className="bg-black/30 rounded-xl p-4 border border-white/5 flex items-center gap-4 min-w-[180px]">
-            <div className="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center">
-              <ShieldCheck className="text-green-500 w-5 h-5" />
-            </div>
-            <div>
-              <div className="text-2xl font-bold font-mono">{stats?.liveAccounts}</div>
-              <div className="text-xs text-muted-foreground uppercase">Активні</div>
-            </div>
-          </div>
-          
-          <div className="bg-black/30 rounded-xl p-4 border border-white/5 flex items-center gap-4 min-w-[180px]">
-            <div className="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center">
-              <Ban className="text-red-500 w-5 h-5" />
-            </div>
-            <div>
-              <div className="text-2xl font-bold font-mono">{stats?.blockedAccounts}</div>
-              <div className="text-xs text-muted-foreground uppercase">Заблоковані</div>
-            </div>
-          </div>
-          
-          <div className="bg-black/30 rounded-xl p-4 border border-white/5 flex items-center gap-4 min-w-[180px]">
-            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-              <Activity className="text-primary w-5 h-5" />
-            </div>
-            <div>
-              <div className="text-2xl font-bold font-mono">{stats?.totalAccounts}</div>
-              <div className="text-xs text-muted-foreground uppercase">Всього</div>
-            </div>
           </div>
         </div>
       </div>

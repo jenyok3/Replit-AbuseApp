@@ -33,16 +33,16 @@ export default function Dashboard() {
               <LaunchPanel />
             </motion.div>
 
-            {/* Bottom Row - 2 Widgets Side-by-Side */}
-            <div className="flex-1 grid grid-cols-1 md:grid-cols-[1.6fr_1fr] gap-6 items-stretch min-h-0">
-              {/* Rectangular Widget (Logs) */}
+            {/* Bottom Row - 3 Widgets */}
+            <div className="flex-1 grid grid-cols-1 md:grid-cols-[1fr_280px_280px] gap-6 items-stretch min-h-0">
+              {/* Logs Widget */}
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.1 }}
-                className="h-full"
+                className="h-full min-h-0"
               >
-                <div className="bg-card/40 backdrop-blur-sm border border-white/5 rounded-3xl p-6 flex flex-col h-full">
+                <div className="bg-card/40 backdrop-blur-sm border border-white/5 rounded-3xl p-6 flex flex-col h-full min-h-0">
                   <LogsPanel hideAddProject />
                 </div>
               </motion.div>
@@ -56,29 +56,28 @@ export default function Dashboard() {
               >
                 <AddProjectWidget />
               </motion.div>
+
+              {/* Daily Widget */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.3 }}
+                className="h-full min-h-0"
+              >
+                <DailyTasksPanel />
+              </motion.div>
             </div>
           </div>
 
-          {/* Right Sidebar Column */}
+          {/* Right Sidebar Column - Stats only */}
           <div className="flex flex-col gap-6 items-stretch h-full min-h-0">
-            {/* Top Right - 30% Height (Stats) */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.3 }}
-              className="h-[30%]"
-            >
-              <StatsPanel />
-            </motion.div>
-            
-            {/* Bottom Right - 70% Height (Daily) */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.4 }}
-              className="h-[70%]"
+              className="h-full"
             >
-              <DailyTasksPanel />
+              <StatsPanel />
             </motion.div>
           </div>
 
