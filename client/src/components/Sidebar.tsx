@@ -17,7 +17,7 @@ export function Sidebar() {
     { icon: Settings, label: "Settings", href: "/settings" },
   ];
 
-  const type = "telegram"; // This could be state-driven
+  const type: "telegram" | "chrome" = "telegram"; // This could be state-driven
 
   return (
     <div className="w-20 lg:w-64 h-screen border-r border-white/5 bg-black/95 flex flex-col shrink-0 transition-all duration-300">
