@@ -34,7 +34,7 @@ export default function Dashboard() {
             </motion.div>
 
             {/* Bottom Row - 2 Widgets */}
-            <div className="flex-1 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 items-stretch min-h-0">
+            <div className="flex-1 grid grid-cols-1 md:grid-cols-[1fr_200px] gap-6 items-stretch min-h-0">
               {/* Logs Widget */}
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
@@ -47,12 +47,12 @@ export default function Dashboard() {
                 </div>
               </motion.div>
               
-              {/* Square Widget (Add Project) - Matches height of Logs Widget and maintains 1:1 ratio */}
+              {/* Square Widget (Add Project) - Now stretches height to match Logs Widget */}
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.2 }}
-                className="h-full flex flex-col justify-end"
+                className="w-full h-full flex flex-col justify-end"
               >
                 <AddProjectWidget />
               </motion.div>
@@ -89,7 +89,7 @@ export default function Dashboard() {
 
 function AddProjectWidget() {
   return (
-    <div className="h-full aspect-square">
+    <div className="aspect-square w-full">
       <AddProjectDialog variant="widget" />
     </div>
   );
