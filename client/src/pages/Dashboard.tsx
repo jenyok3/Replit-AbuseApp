@@ -34,13 +34,13 @@ export default function Dashboard() {
             </motion.div>
 
             {/* Bottom Row - 2 Widgets */}
-            <div className="flex-1 grid grid-cols-1 md:grid-cols-[1fr_280px] gap-6 items-stretch min-h-0">
+            <div className="flex-1 grid grid-cols-1 md:grid-cols-[1fr_280px] gap-6 items-end min-h-0">
               {/* Logs Widget */}
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.1 }}
-                className="h-full min-h-0"
+                className="h-full min-h-0 flex flex-col"
               >
                 <div className="bg-card/40 backdrop-blur-sm border border-white/5 rounded-3xl p-6 flex flex-col h-full min-h-0">
                   <LogsPanel hideAddProject />
@@ -52,7 +52,7 @@ export default function Dashboard() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.2 }}
-                className="h-full"
+                className="w-full flex justify-end"
               >
                 <AddProjectWidget />
               </motion.div>
@@ -89,7 +89,7 @@ export default function Dashboard() {
 
 function AddProjectWidget() {
   return (
-    <div className="h-full aspect-square ml-auto">
+    <div className="aspect-square w-[200px]">
       <AddProjectDialog variant="widget" />
     </div>
   );
