@@ -19,7 +19,7 @@ export default function Dashboard() {
           <div className="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px]" />
         </div>
 
-        <div className="relative z-10 max-w-[1920px] mx-auto h-full grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-12 content-stretch">
+        <div className="relative z-10 max-w-[1920px] mx-auto h-full grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-6 content-stretch">
           
           {/* Left Main Column */}
           <div className="flex flex-col gap-6 min-h-0">
@@ -52,7 +52,7 @@ export default function Dashboard() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.2 }}
-                className="w-full h-full"
+                className="w-full h-full mr-6"
               >
                 <AddProjectWidget />
               </motion.div>
