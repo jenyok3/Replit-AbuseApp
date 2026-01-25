@@ -17,8 +17,8 @@ export function StatsPanel() {
 
   return (
     <div className="bg-card/40 backdrop-blur-sm border border-white/5 rounded-3xl p-6 lg:p-8 flex flex-col h-full">
-      <h2 className="text-xl font-display font-bold text-white mb-6 flex items-center gap-3">
-        <Activity className="text-primary w-6 h-6" />
+      <h2 className="text-lg font-display font-bold text-white mb-6 flex items-center gap-2 whitespace-nowrap">
+        <Activity className="text-primary w-5 h-5 shrink-0" />
         Статистика акаунтів
       </h2>
 
