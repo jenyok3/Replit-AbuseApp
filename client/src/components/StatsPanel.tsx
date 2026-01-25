@@ -1,6 +1,6 @@
 import { useStats } from "@/hooks/use-dashboard";
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
-import { Activity } from "lucide-react";
+import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import { Activity, ShieldCheck, ShieldAlert, Layers } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export function StatsPanel() {
@@ -15,8 +15,6 @@ export function StatsPanel() {
     return <Skeleton className="h-full w-full rounded-3xl bg-card/20" />;
   }
 
-  const livePercent = stats?.livePercent || 0;
-
   return (
     <div className="bg-card/40 backdrop-blur-sm border border-white/5 rounded-3xl p-6 lg:p-8 flex flex-col h-full">
       <h2 className="text-xl font-display font-bold text-white mb-6 flex items-center gap-3">
@@ -24,7 +22,7 @@ export function StatsPanel() {
         Статистика акаунтів
       </h2>
 
-      <div className="flex items-center justify-center flex-1">
+      <div className="flex flex-col items-center justify-center flex-1 gap-6">
         <div className="relative w-32 h-32">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
@@ -40,16 +38,26 @@ export function StatsPanel() {
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
               </Pie>
-              <Tooltip 
-                contentStyle={{ backgroundColor: "#000", borderColor: "#333", borderRadius: "8px" }}
-                itemStyle={{ color: "#fff" }}
-              />
             </PieChart>
           </ResponsiveContainer>
           
-          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-            <span className="text-2xl font-bold font-mono text-white">{livePercent}%</span>
-            <span className="text-xs text-muted-foreground uppercase tracking-wider">Live</span>
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <span className="text-3xl font-bold font-mono text-white">{stats?.liveAccounts || 0}</span>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-6 w-full justify-center">
+          <div className="flex items-center gap-2">
+            <Layers className="w-5 h-5 text-muted-foreground" />
+            <span className="text-lg font-mono font-bold text-white">{stats?.totalAccounts || 0}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <ShieldCheck className="w-5 h-5 text-green-500" />
+            <span className="text-lg font-mono font-bold text-white">{stats?.liveAccounts || 0}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <ShieldAlert className="w-5 h-5 text-red-500" />
+            <span className="text-lg font-mono font-bold text-white">{stats?.blockedAccounts || 0}</span>
           </div>
         </div>
       </div>
