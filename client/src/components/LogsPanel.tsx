@@ -86,7 +86,7 @@ export function AddProjectDialog({ variant = "dialog" }: { variant?: "dialog" | 
             <div className="w-12 h-12 rounded-full bg-white/5 group-hover:bg-primary group-hover:text-white flex items-center justify-center transition-colors">
               <Plus className="w-6 h-6" />
             </div>
-            <span className="font-medium text-lg">+ Додати проект</span>
+            <span className="font-medium text-lg">Додати проект</span>
           </button>
         </DialogTrigger>
         <DialogContent className="bg-[#0a0a0a] border-white/10 text-white sm:max-w-md">
