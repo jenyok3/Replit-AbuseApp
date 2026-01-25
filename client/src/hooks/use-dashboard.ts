@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { api, buildUrl, type InsertProject, type InsertAccount, type InsertDailyTask, type InsertLog } from "@shared/routes";
+import { api, buildUrl } from "@shared/routes";
+import { type InsertProject, type InsertAccount, type InsertDailyTask, type InsertLog } from "@shared/schema";
 
 // ============================================
 // PROJECTS
@@ -122,7 +123,21 @@ export function useToggleDailyTask() {
       if (!res.ok) throw new Error("Failed to toggle task");
       return api.dailyTasks.toggle.responses[200].parse(await res.json());
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: [api.dailyTasks.list.path] }),
+    // Optimistic UI update
+    onMutate: async ({ id, isCompleted }) => {
+      await queryClient.cancelQueries({ queryKey: [api.dailyTasks.list.path] });
+      const previousTasks = queryClient.getQueryData<any[]>([api.dailyTasks.list.path]);
+      queryClient.setQueryData([api.dailyTasks.list.path], (old: any[] | undefined) => {
+        return old?.map(task => task.id === id ? { ...task, isCompleted } : task);
+      });
+      return { previousTasks };
+    },
+    onError: (err, newTodo, context) => {
+      queryClient.setQueryData([api.dailyTasks.list.path], context?.previousTasks);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: [api.dailyTasks.list.path] });
+    },
   });
 }
 
