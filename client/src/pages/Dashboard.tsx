@@ -12,17 +12,17 @@ export default function Dashboard() {
       <Sidebar />
 
       {/* Main Content */}
-      <main className="flex-1 overflow-auto p-4 md:p-6 lg:p-8 relative">
+      <main className="flex-1 overflow-hidden p-4 md:p-6 lg:p-8 relative">
         {/* Background ambient effects */}
         <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
           <div className="absolute top-[10%] left-[20%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px]" />
           <div className="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px]" />
         </div>
 
-        <div className="relative z-10 max-w-[1920px] mx-auto h-[calc(100vh-3rem)] grid grid-cols-1 lg:grid-cols-[1fr_350px] gap-6 content-stretch">
+        <div className="relative z-10 max-w-[1920px] mx-auto h-full grid grid-cols-1 lg:grid-cols-[1fr_350px] gap-6 content-stretch">
           
           {/* Left Main Column */}
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-6 min-h-0">
             {/* Main Top Widget - Full Width (Launch Panel) */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
@@ -34,7 +34,7 @@ export default function Dashboard() {
             </motion.div>
 
             {/* Bottom Row - 2 Widgets Side-by-Side */}
-            <div className="flex-1 grid grid-cols-1 md:grid-cols-[1.6fr_1fr] gap-6 items-stretch">
+            <div className="flex-1 grid grid-cols-1 md:grid-cols-[1.6fr_1fr] gap-6 items-stretch min-h-0">
               {/* Rectangular Widget (Logs) */}
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
@@ -60,7 +60,7 @@ export default function Dashboard() {
           </div>
 
           {/* Right Sidebar Column */}
-          <div className="flex flex-col gap-6 items-stretch h-full">
+          <div className="flex flex-col gap-6 items-stretch h-full min-h-0">
             {/* Top Right - 30% Height (Stats) */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
