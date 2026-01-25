@@ -36,7 +36,7 @@ export function Sidebar() {
         <Button 
           variant="ghost" 
           className={cn(
-            "w-full justify-center lg:justify-start gap-3 h-12 rounded-xl transition-all",
+            "w-full justify-center lg:justify-start gap-3 h-12 rounded-xl transition-all relative overflow-hidden",
             type === "telegram" 
               ? "bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20" 
               : "text-muted-foreground hover:bg-white/5 hover:text-white"
@@ -44,12 +44,15 @@ export function Sidebar() {
         >
           <Send className="w-5 h-5 text-primary" />
           <span className="hidden lg:block font-medium">Telegram</span>
+          {type === "telegram" && (
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-r-full" />
+          )}
         </Button>
         
         <Button 
           variant="ghost" 
           className={cn(
-            "w-full justify-center lg:justify-start gap-3 h-12 rounded-xl transition-all",
+            "w-full justify-center lg:justify-start gap-3 h-12 rounded-xl transition-all relative overflow-hidden",
             type === "chrome" 
               ? "bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20" 
               : "text-muted-foreground hover:bg-white/5 hover:text-white"
@@ -57,6 +60,9 @@ export function Sidebar() {
         >
           <Chrome className="w-5 h-5 text-primary" />
           <span className="hidden lg:block font-medium">Chrome</span>
+          {type === "chrome" && (
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-r-full" />
+          )}
         </Button>
       </div>
 
