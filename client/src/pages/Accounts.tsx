@@ -35,20 +35,20 @@ export default function Accounts() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-full">
+      <div className="flex-1 flex items-center justify-center h-full bg-black">
         <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
       </div>
     );
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="flex-1 overflow-auto bg-black text-white p-6 space-y-6">
       <div className="flex justify-center">
         <div className="relative w-full max-w-md">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
             placeholder="Пошук акаунтів..."
-            className="pl-10"
+            className="pl-10 bg-white/5 border-white/10"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             data-testid="input-search-accounts"
@@ -58,14 +58,14 @@ export default function Accounts() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredAccounts?.map((account, index) => (
-          <Card key={account.id} className="hover-elevate border-white/10">
+          <Card key={account.id} className="hover-elevate border-white/10 bg-card/40 backdrop-blur-sm">
             <CardContent className="p-4 space-y-4">
               <div className="flex items-center justify-between">
                 <span className="font-medium text-lg" data-testid={`text-account-name-${account.id}`}>
                   TG {index + 1}
                 </span>
                 <span className={`text-xs px-2 py-0.5 rounded-full ${
-                  account.status === "live" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
+                  account.status === "live" ? "bg-green-500/10 text-green-500" : "bg-red-500/10 text-red-500"
                 }`}>
                   {account.status}
                 </span>
@@ -75,6 +75,7 @@ export default function Accounts() {
                 <div className="flex gap-2">
                   <Input
                     placeholder="Нотатки..."
+                    className="bg-black/40 border-white/5"
                     defaultValue={account.notes || ""}
                     onBlur={(e) => {
                       if (e.target.value !== (account.notes || "")) {
@@ -83,7 +84,7 @@ export default function Accounts() {
                     }}
                     data-testid={`input-notes-${account.id}`}
                   />
-                  <Button size="icon" variant="outline" data-testid={`button-open-${account.id}`}>
+                  <Button size="icon" variant="outline" className="border-white/10" data-testid={`button-open-${account.id}`}>
                     <ExternalLink className="w-4 h-4" />
                   </Button>
                 </div>
