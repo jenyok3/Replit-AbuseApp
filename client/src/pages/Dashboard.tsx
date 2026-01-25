@@ -28,13 +28,13 @@ export default function Dashboard() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
-              className="h-[60%]"
+              className="flex-none"
             >
               <LaunchPanel />
             </motion.div>
 
             {/* Bottom Row - 2 Widgets Side-by-Side */}
-            <div className="h-[40%] grid grid-cols-1 md:grid-cols-[1.6fr_1fr] gap-6 items-stretch">
+            <div className="flex-1 grid grid-cols-1 md:grid-cols-[1.6fr_1fr] gap-6 items-stretch">
               {/* Rectangular Widget (Logs) */}
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
