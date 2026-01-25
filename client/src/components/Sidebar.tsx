@@ -27,7 +27,7 @@ export function Sidebar() {
           <Bug className="text-white w-6 h-6" />
         </div>
         <span className="ml-3 font-display font-bold text-lg hidden lg:block tracking-wide">
-          FARM<span className="text-primary">.OS</span>
+          Abuse<span className="text-primary">App</span>
         </span>
       </div>
 
@@ -43,7 +43,7 @@ export function Sidebar() {
           )}
         >
           <Send className="w-5 h-5 text-primary" />
-          <span className="hidden lg:block font-medium">Telegram Farm</span>
+          <span className="hidden lg:block font-medium">Telegram Abuse</span>
         </Button>
         
         <Button 
@@ -56,7 +56,7 @@ export function Sidebar() {
           )}
         >
           <Chrome className="w-5 h-5 text-primary" />
-          <span className="hidden lg:block font-medium">Chrome Farm</span>
+          <span className="hidden lg:block font-medium">Chrome Abuse</span>
         </Button>
       </div>
 
@@ -90,7 +90,7 @@ export function Sidebar() {
           <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-zinc-700 to-zinc-600 border border-white/10" />
           <div className="hidden lg:flex flex-col items-start overflow-hidden">
             <span className="text-sm font-medium text-white truncate w-full">Administrator</span>
-            <span className="text-xs text-muted-foreground">admin@farm.os</span>
+            <span className="text-xs text-muted-foreground">admin@abuseapp.io</span>
           </div>
           <LogOut className="w-4 h-4 ml-auto text-muted-foreground group-hover:text-red-400 hidden lg:block" />
         </button>
