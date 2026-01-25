@@ -58,7 +58,7 @@ export default function Accounts() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredAccounts?.map((account, index) => (
-          <Card key={account.id} className="hover-elevate">
+          <Card key={account.id} className="hover-elevate border-white/10">
             <CardContent className="p-4 space-y-4">
               <div className="flex items-center justify-between">
                 <span className="font-medium text-lg" data-testid={`text-account-name-${account.id}`}>
