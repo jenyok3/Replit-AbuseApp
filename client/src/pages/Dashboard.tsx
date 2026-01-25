@@ -19,7 +19,7 @@ export default function Dashboard() {
           <div className="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px]" />
         </div>
 
-        <div className="relative z-10 max-w-[1920px] mx-auto h-full grid grid-cols-1 lg:grid-cols-[1fr_350px] gap-6 content-stretch">
+        <div className="relative z-10 max-w-[1920px] mx-auto h-full grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-6 content-stretch">
           
           {/* Left Main Column */}
           <div className="flex flex-col gap-6 min-h-0">
@@ -34,7 +34,7 @@ export default function Dashboard() {
             </motion.div>
 
             {/* Bottom Row - 2 Widgets */}
-            <div className="flex-1 grid grid-cols-1 md:grid-cols-[1fr_200px] gap-6 items-stretch min-h-0">
+            <div className="flex-1 grid grid-cols-1 md:grid-cols-[1fr_200px] gap-6 items-stretch min-h-0 mr-6">
               {/* Logs Widget */}
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
