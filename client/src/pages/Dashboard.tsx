@@ -19,28 +19,28 @@ export default function Dashboard() {
           <div className="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px]" />
         </div>
 
-        <div className="relative z-10 max-w-[1920px] mx-auto h-[calc(100vh-3rem)] grid grid-cols-1 lg:grid-cols-[1fr_350px] gap-6">
+        <div className="relative z-10 max-w-[1920px] mx-auto h-[calc(100vh-3rem)] grid grid-cols-1 lg:grid-cols-[1fr_350px] gap-6 content-stretch">
           
           {/* Left Main Column */}
-          <div className="flex flex-col gap-6 h-full">
+          <div className="flex flex-col gap-6">
             {/* Main Top Widget - Full Width (Launch Panel) */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
-              className="flex-[0.65]"
+              className="h-[60%]"
             >
               <LaunchPanel />
             </motion.div>
 
             {/* Bottom Row - 2 Widgets Side-by-Side */}
-            <div className="flex-[0.35] grid grid-cols-1 md:grid-cols-[1.6fr_1fr] gap-6">
+            <div className="h-[40%] grid grid-cols-1 md:grid-cols-[1.6fr_1fr] gap-6 items-stretch">
               {/* Rectangular Widget (Logs) */}
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.1 }}
-                className="w-full h-full"
+                className="h-full"
               >
                 <div className="bg-card/40 backdrop-blur-sm border border-white/5 rounded-3xl p-6 flex flex-col h-full">
                   <LogsPanel hideAddProject />
@@ -52,7 +52,7 @@ export default function Dashboard() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.2 }}
-                className="w-full h-full aspect-square md:aspect-auto"
+                className="h-full"
               >
                 <AddProjectWidget />
               </motion.div>
@@ -60,13 +60,13 @@ export default function Dashboard() {
           </div>
 
           {/* Right Sidebar Column */}
-          <div className="flex flex-col gap-6 h-full">
+          <div className="flex flex-col gap-6 items-stretch h-full">
             {/* Top Right - 30% Height (Stats) */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.3 }}
-              className="flex-[0.3]"
+              className="h-[30%]"
             >
               <StatsPanel />
             </motion.div>
@@ -76,7 +76,7 @@ export default function Dashboard() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.4 }}
-              className="flex-[0.7]"
+              className="h-[70%]"
             >
               <DailyTasksPanel />
             </motion.div>

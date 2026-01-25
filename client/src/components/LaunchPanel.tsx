@@ -53,11 +53,11 @@ export function LaunchPanel() {
         Масовий запуск
       </h2>
 
-      <div className="space-y-6 flex-1">
+      <div className="space-y-4 flex-1">
         <div className="space-y-2">
           <Label className="text-muted-foreground text-xs uppercase tracking-wider font-bold">Проект</Label>
           <Select value={selectedProject} onValueChange={setSelectedProject}>
-            <SelectTrigger className="bg-black/50 border-white/10 h-12 rounded-xl focus:ring-primary/50 text-white">
+            <SelectTrigger className="bg-black/50 border-white/10 h-10 rounded-xl focus:ring-primary/50 text-white">
               <SelectValue placeholder="Виберіть проект" />
             </SelectTrigger>
             <SelectContent className="bg-black border-white/10 text-white">
@@ -84,7 +84,7 @@ export function LaunchPanel() {
               placeholder="1" 
               value={startRange}
               onChange={(e) => setStartRange(e.target.value)}
-              className="bg-black/50 border-white/10 h-12 rounded-xl focus:border-primary/50 text-white font-mono" 
+              className="bg-black/50 border-white/10 h-10 rounded-xl focus:border-primary/50 text-white font-mono" 
             />
           </div>
           <div className="space-y-2">
@@ -94,17 +94,17 @@ export function LaunchPanel() {
               placeholder="100" 
               value={endRange}
               onChange={(e) => setEndRange(e.target.value)}
-              className="bg-black/50 border-white/10 h-12 rounded-xl focus:border-primary/50 text-white font-mono" 
+              className="bg-black/50 border-white/10 h-10 rounded-xl focus:border-primary/50 text-white font-mono" 
             />
           </div>
         </div>
 
-        <div className="flex items-center space-x-3 pt-2">
+        <div className="flex items-center space-x-3 pt-1">
           <Checkbox 
             id="mix" 
             checked={isMix}
             onCheckedChange={(checked) => setIsMix(checked as boolean)}
-            className="border-white/20 data-[state=checked]:bg-primary data-[state=checked]:text-white w-6 h-6 rounded-md" 
+            className="border-white/20 data-[state=checked]:bg-primary data-[state=checked]:text-white w-5 h-5 rounded-md" 
           />
           <Label htmlFor="mix" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer">
             Увімкнути режим "Мікс"
@@ -112,14 +112,14 @@ export function LaunchPanel() {
         </div>
       </div>
 
-      <div className="mt-8">
+      <div className="mt-4">
         <Button 
           onClick={handleLaunch}
           disabled={isLaunching || !selectedProject}
-          className="w-full h-14 text-lg font-bold bg-primary hover:bg-primary/90 text-white shadow-[0_0_20px_rgba(157,0,255,0.4)] hover:shadow-[0_0_30px_rgba(157,0,255,0.6)] hover:-translate-y-1 transition-all duration-300 rounded-xl uppercase tracking-widest"
+          className="w-full h-12 text-base font-bold bg-primary hover:bg-primary/90 text-white shadow-[0_0_20px_rgba(157,0,255,0.4)] hover:shadow-[0_0_30px_rgba(157,0,255,0.6)] hover:-translate-y-0.5 transition-all duration-300 rounded-xl uppercase tracking-widest"
         >
           {isLaunching ? (
-            <Loader2 className="mr-2 h-6 w-6 animate-spin" />
+            <Loader2 className="mr-2 h-5 w-5 animate-spin" />
           ) : (
             "ЗАПУСТИТИ"
           )}

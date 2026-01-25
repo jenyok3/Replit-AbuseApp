@@ -82,7 +82,7 @@ export function AddProjectDialog({ variant = "dialog" }: { variant?: "dialog" | 
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <button className="h-full w-full border-2 border-dashed border-white/5 hover:border-primary/50 rounded-3xl flex flex-col items-center justify-center gap-3 text-muted-foreground hover:text-white transition-all hover:bg-white/5 group bg-card/20 backdrop-blur-sm">
+          <button className="h-full w-full border-2 border-dashed border-white/5 hover:border-primary/50 rounded-3xl flex flex-col items-center justify-center gap-3 text-muted-foreground hover:text-white transition-all hover:bg-white/5 group bg-card/20 backdrop-blur-sm stroke-dash-[10_15]">
             <div className="w-12 h-12 rounded-full bg-white/5 group-hover:bg-primary group-hover:text-white flex items-center justify-center transition-colors">
               <Plus className="w-6 h-6" />
             </div>
