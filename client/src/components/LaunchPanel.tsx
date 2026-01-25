@@ -76,8 +76,8 @@ export function LaunchPanel() {
           </Select>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
+        <div className="flex gap-4">
+          <div className="space-y-2 w-32 shrink-0">
             <Label className="text-muted-foreground text-xs uppercase tracking-wider font-bold">Початок</Label>
             <Input 
               type="number" 
@@ -87,7 +87,7 @@ export function LaunchPanel() {
               className="bg-black/50 border-white/10 h-10 rounded-xl focus:border-primary/50 text-white font-mono" 
             />
           </div>
-          <div className="space-y-2">
+          <div className="space-y-2 w-32 shrink-0">
             <Label className="text-muted-foreground text-xs uppercase tracking-wider font-bold">Кінець</Label>
             <Input 
               type="number" 
@@ -97,6 +97,7 @@ export function LaunchPanel() {
               className="bg-black/50 border-white/10 h-10 rounded-xl focus:border-primary/50 text-white font-mono" 
             />
           </div>
+          <div className="flex-1" />
         </div>
 
         <div className="flex items-center space-x-3 pt-1">
