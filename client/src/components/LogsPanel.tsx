@@ -10,13 +10,13 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 
-export function LogsPanel() {
+export function LogsPanel({ hideAddProject = false }: { hideAddProject?: boolean }) {
   const { data: logs, isLoading } = useLogs();
   
   return (
-    <div className="flex flex-col lg:flex-row gap-6 h-full">
+    <div className="flex flex-col lg:flex-row gap-6 h-full w-full">
       {/* Logs Section */}
-      <div className="flex-1 bg-card/40 backdrop-blur-sm border border-white/5 rounded-3xl p-6 flex flex-col min-h-[300px] lg:min-h-0">
+      <div className="flex-1 flex flex-col min-h-[300px] lg:min-h-0">
         <h2 className="text-lg font-display font-bold text-white mb-4 flex items-center gap-2">
           <Terminal className="text-muted-foreground w-5 h-5" />
           Останні дії
@@ -45,14 +45,16 @@ export function LogsPanel() {
       </div>
       
       {/* Add Project Section */}
-      <div className="w-full lg:w-48 shrink-0 flex flex-col gap-4">
-        <AddProjectDialog />
-      </div>
+      {!hideAddProject && (
+        <div className="w-full lg:w-48 shrink-0 flex flex-col gap-4">
+          <AddProjectDialog />
+        </div>
+      )}
     </div>
   );
 }
 
-function AddProjectDialog() {
+export function AddProjectDialog({ variant = "dialog" }: { variant?: "dialog" | "widget" }) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [link, setLink] = useState("");
@@ -75,6 +77,74 @@ function AddProjectDialog() {
       }
     });
   };
+
+  if (variant === "widget") {
+    return (
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild>
+          <button className="h-full w-full border-2 border-dashed border-white/5 hover:border-primary/50 rounded-3xl flex flex-col items-center justify-center gap-3 text-muted-foreground hover:text-white transition-all hover:bg-white/5 group bg-card/20 backdrop-blur-sm">
+            <div className="w-12 h-12 rounded-full bg-white/5 group-hover:bg-primary group-hover:text-white flex items-center justify-center transition-colors">
+              <Plus className="w-6 h-6" />
+            </div>
+            <span className="font-medium text-lg">+ Додати проект</span>
+          </button>
+        </DialogTrigger>
+        <DialogContent className="bg-[#0a0a0a] border-white/10 text-white sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <FolderPlus className="w-5 h-5 text-primary" /> 
+              Новий проект
+            </DialogTitle>
+          </DialogHeader>
+          
+          <form onSubmit={handleSubmit} className="space-y-4 pt-4">
+            <div className="space-y-2">
+              <Label>Назва проекту</Label>
+              <Input 
+                value={name} 
+                onChange={(e) => setName(e.target.value)} 
+                placeholder="Мій крутий проект"
+                className="bg-black/50 border-white/10"
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label>Посилання (опціонально)</Label>
+              <Input 
+                value={link} 
+                onChange={(e) => setLink(e.target.value)} 
+                placeholder="https://t.me/..."
+                className="bg-black/50 border-white/10"
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label>Тип</Label>
+              <Select value={type} onValueChange={setType}>
+                <SelectTrigger className="bg-black/50 border-white/10">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-black border-white/10 text-white">
+                  <SelectItem value="telegram">Telegram</SelectItem>
+                  <SelectItem value="chrome">Chrome</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <DialogFooter className="pt-4">
+              <Button type="button" variant="ghost" onClick={() => setOpen(false)} className="hover:bg-white/10 hover:text-white">
+                Скасувати
+              </Button>
+              <Button type="submit" disabled={isPending} className="bg-primary text-white hover:bg-primary/90">
+                {isPending && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+                Створити
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+    );
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
