@@ -40,7 +40,7 @@ export default function Dashboard() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.1 }}
-                className="h-full min-h-0 flex flex-col pr-6"
+                className="h-full min-h-0 flex flex-col"
               >
                 <div className="bg-card/40 backdrop-blur-sm border border-white/5 rounded-3xl p-6 flex flex-col h-full min-h-0">
                   <LogsPanel hideAddProject />
@@ -52,7 +52,7 @@ export default function Dashboard() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.2 }}
-                className="w-full h-full"
+                className="w-full h-full mr-6"
               >
                 <AddProjectWidget />
               </motion.div>
