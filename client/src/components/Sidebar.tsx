@@ -53,21 +53,23 @@ export function Sidebar() {
           </Button>
         </Link>
         
-        <Button 
-          variant="ghost" 
-          className={cn(
-            "w-full justify-center lg:justify-start gap-3 h-12 rounded-xl transition-all relative overflow-hidden",
-            false // Chrome section not active for now
-              ? "bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20" 
-              : "text-muted-foreground hover:bg-white/5 hover:text-white"
-          )}
-        >
-          <Chrome className="w-5 h-5 text-primary" />
-          <span className="hidden lg:block font-medium">Chrome</span>
-          {false && (
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-r-full" />
-          )}
-        </Button>
+        <Link href="/chrome">
+          <Button 
+            variant="ghost" 
+            className={cn(
+              "w-full justify-center lg:justify-start gap-3 h-12 rounded-xl transition-all relative overflow-hidden",
+              location === "/chrome"
+                ? "bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20" 
+                : "text-muted-foreground hover:bg-white/5 hover:text-white"
+            )}
+          >
+            <Chrome className="w-5 h-5 text-primary" />
+            <span className="hidden lg:block font-medium">Chrome</span>
+            {location === "/chrome" && (
+              <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-r-full" />
+            )}
+          </Button>
+        </Link>
       </div>
 
       <div className="h-px bg-white/5 mx-4 my-2" />
