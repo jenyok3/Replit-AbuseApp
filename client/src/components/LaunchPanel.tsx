@@ -53,7 +53,7 @@ export function LaunchPanel() {
         Масовий запуск
       </h2>
 
-      <div className="space-y-4 flex-1">
+      <div className="space-y-4">
         <div className="space-y-2">
           <Label className="text-muted-foreground text-xs uppercase tracking-wider font-bold">Проект</Label>
           <Select value={selectedProject} onValueChange={setSelectedProject}>
@@ -112,7 +112,7 @@ export function LaunchPanel() {
         </div>
       </div>
 
-      <div className="mt-4">
+      <div className="mt-6">
         <Button 
           onClick={handleLaunch}
           disabled={isLaunching || !selectedProject}
