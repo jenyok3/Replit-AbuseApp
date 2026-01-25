@@ -34,13 +34,13 @@ export default function Dashboard() {
             </motion.div>
 
             {/* Bottom Row - 2 Widgets */}
-            <div className="flex-1 grid grid-cols-1 md:grid-cols-[1fr_200px] gap-6 items-stretch min-h-0 mr-6">
+            <div className="flex-1 grid grid-cols-1 md:grid-cols-[1fr_200px] gap-6 items-stretch min-h-0">
               {/* Logs Widget */}
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.1 }}
-                className="h-full min-h-0 flex flex-col"
+                className="h-full min-h-0 flex flex-col pr-6"
               >
                 <div className="bg-card/40 backdrop-blur-sm border border-white/5 rounded-3xl p-6 flex flex-col h-full min-h-0">
                   <LogsPanel hideAddProject />
