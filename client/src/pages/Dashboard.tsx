@@ -89,7 +89,7 @@ export default function Dashboard() {
 
 function AddProjectWidget() {
   return (
-    <div className="aspect-square w-full">
+    <div className="h-full w-full">
       <AddProjectDialog variant="widget" />
     </div>
   );
