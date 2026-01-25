@@ -52,7 +52,7 @@ export default function Dashboard() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.2 }}
-                className="h-full flex items-center justify-center"
+                className="h-full"
               >
                 <AddProjectWidget />
               </motion.div>
@@ -89,7 +89,7 @@ export default function Dashboard() {
 
 function AddProjectWidget() {
   return (
-    <div className="aspect-square w-full max-w-[280px]">
+    <div className="h-full aspect-square ml-auto">
       <AddProjectDialog variant="widget" />
     </div>
   );
