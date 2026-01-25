@@ -17,6 +17,7 @@ export function Sidebar() {
     { icon: Settings, label: "Settings", href: "/settings" },
   ];
 
+  const isSettingsActive = location === "/settings";
   const type: "telegram" | "chrome" = "telegram"; // This could be state-driven
 
   return (
@@ -37,14 +38,14 @@ export function Sidebar() {
           variant="ghost" 
           className={cn(
             "w-full justify-center lg:justify-start gap-3 h-12 rounded-xl transition-all relative overflow-hidden",
-            type === "telegram" 
+            !isSettingsActive && type === "telegram" 
               ? "bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20" 
               : "text-muted-foreground hover:bg-white/5 hover:text-white"
           )}
         >
           <Send className="w-5 h-5 text-primary" />
           <span className="hidden lg:block font-medium">Telegram</span>
-          {type === "telegram" && (
+          {!isSettingsActive && type === "telegram" && (
             <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-r-full" />
           )}
         </Button>
@@ -53,14 +54,14 @@ export function Sidebar() {
           variant="ghost" 
           className={cn(
             "w-full justify-center lg:justify-start gap-3 h-12 rounded-xl transition-all relative overflow-hidden",
-            type === "chrome" 
+            !isSettingsActive && type === "chrome" 
               ? "bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20" 
               : "text-muted-foreground hover:bg-white/5 hover:text-white"
           )}
         >
           <Chrome className="w-5 h-5 text-primary" />
           <span className="hidden lg:block font-medium">Chrome</span>
-          {type === "chrome" && (
+          {!isSettingsActive && type === "chrome" && (
             <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-r-full" />
           )}
         </Button>
