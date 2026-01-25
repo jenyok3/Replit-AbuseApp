@@ -30,17 +30,26 @@ export const logs = pgTable("logs", {
   timestamp: timestamp("timestamp").defaultNow(),
 });
 
+export const settings = pgTable("settings", {
+  id: serial("id").primaryKey(),
+  accountsPerBatch: integer("accounts_per_batch").default(1),
+  accountsFolderPath: text("accounts_folder_path").default(""),
+});
+
 export const insertProjectSchema = createInsertSchema(projects).omit({ id: true, createdAt: true });
 export const insertAccountSchema = createInsertSchema(accounts).omit({ id: true, lastActive: true });
 export const insertDailyTaskSchema = createInsertSchema(dailyTasks).omit({ id: true });
 export const insertLogSchema = createInsertSchema(logs).omit({ id: true, timestamp: true });
+export const insertSettingsSchema = createInsertSchema(settings).omit({ id: true });
 
 export type Project = typeof projects.$inferSelect;
 export type Account = typeof accounts.$inferSelect;
 export type DailyTask = typeof dailyTasks.$inferSelect;
 export type Log = typeof logs.$inferSelect;
+export type Settings = typeof settings.$inferSelect;
 
 export type InsertProject = z.infer<typeof insertProjectSchema>;
 export type InsertAccount = z.infer<typeof insertAccountSchema>;
 export type InsertDailyTask = z.infer<typeof insertDailyTaskSchema>;
 export type InsertLog = z.infer<typeof insertLogSchema>;
+export type InsertSettings = z.infer<typeof insertSettingsSchema>;

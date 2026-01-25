@@ -129,6 +129,28 @@ export async function registerRoutes(
     res.json(stats);
   });
 
+  // --- Settings ---
+  app.get(api.settings.get.path, async (_req, res) => {
+    const settings = await storage.getSettings();
+    res.json(settings);
+  });
+
+  app.patch(api.settings.update.path, async (req, res) => {
+    try {
+      const input = api.settings.update.input.parse(req.body);
+      const settings = await storage.updateSettings(input);
+      res.json(settings);
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        return res.status(400).json({
+          message: err.errors[0].message,
+          field: err.errors[0].path.join('.'),
+        });
+      }
+      throw err;
+    }
+  });
+
   // Seed Data
   await seedDatabase();
 

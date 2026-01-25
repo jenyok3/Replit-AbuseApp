@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { insertProjectSchema, insertAccountSchema, insertDailyTaskSchema, insertLogSchema, projects, accounts, dailyTasks, logs } from './schema';
+import { insertProjectSchema, insertAccountSchema, insertDailyTaskSchema, insertLogSchema, insertSettingsSchema, projects, accounts, dailyTasks, logs, settings } from './schema';
 
 export const errorSchemas = {
   validation: z.object({
@@ -123,6 +123,24 @@ export const api = {
           blockedAccounts: z.number(),
           livePercent: z.number(),
         }),
+      },
+    },
+  },
+  settings: {
+    get: {
+      method: 'GET' as const,
+      path: '/api/settings',
+      responses: {
+        200: z.custom<typeof settings.$inferSelect>(),
+      },
+    },
+    update: {
+      method: 'PATCH' as const,
+      path: '/api/settings',
+      input: insertSettingsSchema,
+      responses: {
+        200: z.custom<typeof settings.$inferSelect>(),
+        400: errorSchemas.validation,
       },
     },
   },

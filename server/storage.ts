@@ -1,10 +1,11 @@
 import { db } from "./db";
 import {
-  projects, accounts, dailyTasks, logs,
+  projects, accounts, dailyTasks, logs, settings,
   type Project, type InsertProject,
   type Account, type InsertAccount,
   type DailyTask, type InsertDailyTask,
-  type Log, type InsertLog
+  type Log, type InsertLog,
+  type Settings, type InsertSettings
 } from "@shared/schema";
 import { eq, desc, sql } from "drizzle-orm";
 
@@ -35,6 +36,10 @@ export interface IStorage {
     blockedAccounts: number;
     livePercent: number;
   }>;
+
+  // Settings
+  getSettings(): Promise<Settings>;
+  updateSettings(settings: InsertSettings): Promise<Settings>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -107,6 +112,24 @@ export class DatabaseStorage implements IStorage {
       blockedAccounts,
       livePercent
     };
+  }
+
+  async getSettings(): Promise<Settings> {
+    const [s] = await db.select().from(settings).limit(1);
+    if (!s) {
+      const [newSettings] = await db.insert(settings).values({ accountsPerBatch: 1, accountsFolderPath: "" }).returning();
+      return newSettings;
+    }
+    return s;
+  }
+
+  async updateSettings(input: InsertSettings): Promise<Settings> {
+    const s = await this.getSettings();
+    const [updated] = await db.update(settings)
+      .set(input)
+      .where(eq(settings.id, s.id))
+      .returning();
+    return updated;
   }
 }
 
