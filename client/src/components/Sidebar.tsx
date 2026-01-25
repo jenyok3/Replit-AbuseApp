@@ -43,7 +43,7 @@ export function Sidebar() {
           )}
         >
           <Send className="w-5 h-5 text-primary" />
-          <span className="hidden lg:block font-medium">Telegram Abuse</span>
+          <span className="hidden lg:block font-medium">Telegram</span>
         </Button>
         
         <Button 
@@ -56,7 +56,7 @@ export function Sidebar() {
           )}
         >
           <Chrome className="w-5 h-5 text-primary" />
-          <span className="hidden lg:block font-medium">Chrome Abuse</span>
+          <span className="hidden lg:block font-medium">Chrome</span>
         </Button>
       </div>
 
