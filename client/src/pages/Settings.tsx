@@ -34,30 +34,38 @@ export default function Settings() {
     },
   });
 
-  const [accountsPerBatch, setAccountsPerBatch] = useState<string>("");
-  const [accountsFolderPath, setAccountsFolderPath] = useState<string>("");
+  const [telegramThreads, setTelegramThreads] = useState<string>("");
+  const [telegramFolderPath, setTelegramFolderPath] = useState<string>("");
+  const [chromeThreads, setChromeThreads] = useState<string>("");
+  const [chromeFolderPath, setChromeFolderPath] = useState<string>("");
   const [hasChanges, setHasChanges] = useState(false);
 
   useEffect(() => {
     if (settings) {
-      setAccountsPerBatch(String(settings.accountsPerBatch));
-      setAccountsFolderPath(settings.accountsFolderPath);
+      setTelegramThreads(String(settings.telegramThreads || "1"));
+      setTelegramFolderPath(settings.telegramFolderPath || "");
+      setChromeThreads(String(settings.chromeThreads || "1"));
+      setChromeFolderPath(settings.chromeFolderPath || "");
     }
   }, [settings]);
 
   useEffect(() => {
     if (settings) {
       const changed = 
-        accountsPerBatch !== String(settings.accountsPerBatch) || 
-        accountsFolderPath !== settings.accountsFolderPath;
+        telegramThreads !== String(settings.telegramThreads) || 
+        telegramFolderPath !== settings.telegramFolderPath ||
+        chromeThreads !== String(settings.chromeThreads) ||
+        chromeFolderPath !== settings.chromeFolderPath;
       setHasChanges(changed);
     }
-  }, [accountsPerBatch, accountsFolderPath, settings]);
+  }, [telegramThreads, telegramFolderPath, chromeThreads, chromeFolderPath, settings]);
 
   const handleSave = () => {
     mutation.mutate({
-      accountsPerBatch: parseInt(accountsPerBatch) || 1,
-      accountsFolderPath,
+      telegramThreads: parseInt(telegramThreads) || 1,
+      telegramFolderPath,
+      chromeThreads: parseInt(chromeThreads) || 1,
+      chromeFolderPath,
     });
   };
 
@@ -80,74 +88,85 @@ export default function Settings() {
           </div>
         </div>
 
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-card/40 backdrop-blur-sm border border-white/5 rounded-3xl p-8 space-y-6"
-        >
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="accountsPerBatch" className="text-sm font-medium text-zinc-400">
-                Кількість акаунтів для відкриття за раз
-              </Label>
-              <div className="relative group">
+        <div className="space-y-6">
+          {/* Telegram Settings */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-card/40 backdrop-blur-sm border border-white/5 rounded-3xl p-8 space-y-6"
+          >
+            <h2 className="text-xl font-semibold flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-blue-500" />
+              Налаштування Telegram
+            </h2>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="telegramThreads" className="text-sm font-medium text-zinc-400">
+                  Кількість потоків
+                </Label>
                 <Input
-                  id="accountsPerBatch"
+                  id="telegramThreads"
                   type="number"
-                  value={accountsPerBatch}
-                  onChange={(e) => setAccountsPerBatch(e.target.value)}
+                  value={telegramThreads}
+                  onChange={(e) => setTelegramThreads(e.target.value)}
                   className="bg-black/40 border-white/5 h-12 rounded-xl focus:border-primary/50 transition-all pl-4"
                 />
-                {hasChanges && (
-                   <motion.div
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      className="absolute right-3 top-1/2 -translate-y-1/2"
-                   >
-                     <Button 
-                      size="icon" 
-                      variant="ghost" 
-                      className="h-8 w-8 text-primary hover:bg-primary/10"
-                      onClick={handleSave}
-                     >
-                       <Check className="h-5 w-5" />
-                     </Button>
-                   </motion.div>
-                )}
               </div>
-            </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="folderPath" className="text-sm font-medium text-zinc-400">
-                Шлях до папки з акаунтами
-              </Label>
-              <div className="relative group">
+              <div className="space-y-2">
+                <Label htmlFor="telegramFolderPath" className="text-sm font-medium text-zinc-400">
+                  Шлях до папки з акаунтами
+                </Label>
                 <Input
-                  id="folderPath"
-                  value={accountsFolderPath}
-                  onChange={(e) => setAccountsFolderPath(e.target.value)}
+                  id="telegramFolderPath"
+                  value={telegramFolderPath}
+                  onChange={(e) => setTelegramFolderPath(e.target.value)}
                   className="bg-black/40 border-white/5 h-12 rounded-xl focus:border-primary/50 transition-all pl-4"
-                  placeholder="C:\Users\Admin\Documents\Accounts"
+                  placeholder="C:\Users\Admin\Documents\TelegramAccounts"
                 />
-                {hasChanges && (
-                   <motion.div
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      className="absolute right-3 top-1/2 -translate-y-1/2"
-                   >
-                     <Button 
-                      size="icon" 
-                      variant="ghost" 
-                      className="h-8 w-8 text-primary hover:bg-primary/10"
-                      onClick={handleSave}
-                     >
-                       <Check className="h-5 w-5" />
-                     </Button>
-                   </motion.div>
-                )}
               </div>
             </div>
-          </div>
+          </motion.div>
+
+          {/* Chrome Settings */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="bg-card/40 backdrop-blur-sm border border-white/5 rounded-3xl p-8 space-y-6"
+          >
+            <h2 className="text-xl font-semibold flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-orange-500" />
+              Налаштування Chrome
+            </h2>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="chromeThreads" className="text-sm font-medium text-zinc-400">
+                  Кількість потоків
+                </Label>
+                <Input
+                  id="chromeThreads"
+                  type="number"
+                  value={chromeThreads}
+                  onChange={(e) => setChromeThreads(e.target.value)}
+                  className="bg-black/40 border-white/5 h-12 rounded-xl focus:border-primary/50 transition-all pl-4"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="chromeFolderPath" className="text-sm font-medium text-zinc-400">
+                  Шлях до папки з акаунтами
+                </Label>
+                <Input
+                  id="chromeFolderPath"
+                  value={chromeFolderPath}
+                  onChange={(e) => setChromeFolderPath(e.target.value)}
+                  className="bg-black/40 border-white/5 h-12 rounded-xl focus:border-primary/50 transition-all pl-4"
+                  placeholder="C:\Users\Admin\Documents\ChromeAccounts"
+                />
+              </div>
+            </div>
+          </motion.div>
 
           {hasChanges && (
             <motion.div
@@ -157,14 +176,15 @@ export default function Settings() {
             >
               <Button 
                 onClick={handleSave}
+                disabled={mutation.isPending}
                 className="w-full h-12 rounded-xl bg-primary hover:bg-primary/90 text-white font-bold transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2"
               >
                 <Save className="w-5 h-5" />
-                Зберегти зміни
+                {mutation.isPending ? "Збереження..." : "Зберегти зміни"}
               </Button>
             </motion.div>
           )}
-        </motion.div>
+        </div>
       </main>
     </div>
   );

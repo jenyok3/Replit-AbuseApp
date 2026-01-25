@@ -33,8 +33,10 @@ export const logs = pgTable("logs", {
 
 export const settings = pgTable("settings", {
   id: serial("id").primaryKey(),
-  accountsPerBatch: integer("accounts_per_batch").default(1),
-  accountsFolderPath: text("accounts_folder_path").default(""),
+  telegramThreads: integer("telegram_threads").default(1),
+  telegramFolderPath: text("telegram_folder_path").default(""),
+  chromeThreads: integer("chrome_threads").default(1),
+  chromeFolderPath: text("chrome_folder_path").default(""),
 });
 
 export const insertProjectSchema = createInsertSchema(projects).omit({ id: true, createdAt: true });

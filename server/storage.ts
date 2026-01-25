@@ -125,7 +125,12 @@ export class DatabaseStorage implements IStorage {
   async getSettings(): Promise<Settings> {
     const [s] = await db.select().from(settings).limit(1);
     if (!s) {
-      const [newSettings] = await db.insert(settings).values({ accountsPerBatch: 1, accountsFolderPath: "" }).returning();
+      const [newSettings] = await db.insert(settings).values({ 
+        telegramThreads: 1, 
+        telegramFolderPath: "",
+        chromeThreads: 1,
+        chromeFolderPath: ""
+      }).returning();
       return newSettings;
     }
     return s;
