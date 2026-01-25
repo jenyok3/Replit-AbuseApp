@@ -48,11 +48,16 @@ export function DailyTasksPanel() {
                 key={task.id} 
                 className="group flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-all border border-transparent hover:border-white/5"
               >
-                <Checkbox 
-                  checked={task.isCompleted || false}
-                  onCheckedChange={(checked) => toggleTask({ id: task.id, isCompleted: checked as boolean })}
-                  className="w-5 h-5 border-white/30 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
-                />
+                <label className="checkbox-container">
+                  <input 
+                    type="checkbox"
+                    checked={task.isCompleted || false}
+                    onChange={(e) => toggleTask({ id: task.id, isCompleted: e.target.checked })}
+                  />
+                  <svg viewBox="0 0 64 64" height="20" width="20">
+                    <path d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16" className="checkbox-path"></path>
+                  </svg>
+                </label>
                 <span className={cn(
                   "flex-1 text-sm transition-all duration-300",
                   task.isCompleted ? "text-muted-foreground line-through decoration-primary decoration-2" : "text-white"
