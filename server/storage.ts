@@ -1,6 +1,6 @@
 import { db } from "./db";
 import {
-  projects, accounts, dailyTasks, logs, settings,
+  projectsTable, accountsTable, dailyTasksTable, logsTable, settingsTable,
   type Project, type InsertProject,
   type Account, type InsertAccount,
   type DailyTask, type InsertDailyTask,
@@ -45,70 +45,70 @@ export interface IStorage {
 
 export class DatabaseStorage implements IStorage {
   async getProjects(): Promise<Project[]> {
-    return await db.select().from(projects).orderBy(desc(projects.createdAt));
+    return await db.select().from(projectsTable).orderBy(desc(projectsTable.createdAt));
   }
 
   async createProject(project: InsertProject): Promise<Project> {
-    const [newProject] = await db.insert(projects).values(project).returning();
+    const [newProject] = await db.insert(projectsTable).values(project).returning();
     return newProject;
   }
 
   async deleteProject(id: number): Promise<void> {
-    await db.delete(projects).where(eq(projects.id, id));
+    await db.delete(projectsTable).where(eq(projectsTable.id, id));
   }
 
   async getAccounts(): Promise<Account[]> {
-    return await db.select().from(accounts);
+    return await db.select().from(accountsTable);
   }
 
   async createAccount(account: InsertAccount): Promise<Account> {
-    const [newAccount] = await db.insert(accounts).values(account).returning();
+    const [newAccount] = await db.insert(accountsTable).values(account).returning();
     return newAccount;
   }
 
   async updateAccountNotes(id: number, notes: string): Promise<Account> {
-    const [updated] = await db.update(accounts)
+    const [updated] = await db.update(accountsTable)
       .set({ notes })
-      .where(eq(accounts.id, id))
+      .where(eq(accountsTable.id, id))
       .returning();
     return updated;
   }
 
   async getDailyTasks(): Promise<DailyTask[]> {
-    return await db.select().from(dailyTasks).orderBy(dailyTasks.id);
+    return await db.select().from(dailyTasksTable).orderBy(dailyTasksTable.id);
   }
 
   async createDailyTask(task: InsertDailyTask): Promise<DailyTask> {
-    const [newTask] = await db.insert(dailyTasks).values(task).returning();
+    const [newTask] = await db.insert(dailyTasksTable).values(task).returning();
     return newTask;
   }
 
   async toggleDailyTask(id: number, isCompleted: boolean): Promise<DailyTask> {
-    const [updated] = await db.update(dailyTasks)
+    const [updated] = await db.update(dailyTasksTable)
       .set({ isCompleted })
-      .where(eq(dailyTasks.id, id))
+      .where(eq(dailyTasksTable.id, id))
       .returning();
     return updated;
   }
 
   async deleteDailyTask(id: number): Promise<void> {
-    await db.delete(dailyTasks).where(eq(dailyTasks.id, id));
+    await db.delete(dailyTasksTable).where(eq(dailyTasksTable.id, id));
   }
 
   async getLogs(): Promise<Log[]> {
-    return await db.select().from(logs).orderBy(desc(logs.timestamp)).limit(50);
+    return await db.select().from(logsTable).orderBy(desc(logsTable.timestamp)).limit(50);
   }
 
   async createLog(log: InsertLog): Promise<Log> {
-    const [newLog] = await db.insert(logs).values(log).returning();
+    const [newLog] = await db.insert(logsTable).values(log).returning();
     return newLog;
   }
 
   async getStats() {
-    const allAccounts = await db.select().from(accounts);
+    const allAccounts = await db.select().from(accountsTable);
     const totalAccounts = allAccounts.length;
-    const liveAccounts = allAccounts.filter(a => a.status === 'live').length;
-    const blockedAccounts = allAccounts.filter(a => a.status === 'blocked').length;
+    const liveAccounts = allAccounts.filter((a: Account) => a.status === 'live').length;
+    const blockedAccounts = allAccounts.filter((a: Account) => a.status === 'blocked').length;
     
     const livePercent = totalAccounts > 0 
       ? Math.round((liveAccounts / totalAccounts) * 100) 
@@ -123,9 +123,9 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getSettings(): Promise<Settings> {
-    const [s] = await db.select().from(settings).limit(1);
+    const [s] = await db.select().from(settingsTable).limit(1);
     if (!s) {
-      const [newSettings] = await db.insert(settings).values({ 
+      const [newSettings] = await db.insert(settingsTable).values({ 
         telegramThreads: 1, 
         telegramFolderPath: "",
         chromeThreads: 1,
@@ -138,9 +138,9 @@ export class DatabaseStorage implements IStorage {
 
   async updateSettings(input: InsertSettings): Promise<Settings> {
     const s = await this.getSettings();
-    const [updated] = await db.update(settings)
+    const [updated] = await db.update(settingsTable)
       .set(input)
-      .where(eq(settings.id, s.id))
+      .where(eq(settingsTable.id, s.id))
       .returning();
     return updated;
   }
