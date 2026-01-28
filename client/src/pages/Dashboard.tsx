@@ -5,6 +5,7 @@ import { LogsPanel, AddProjectDialog } from "@/components/LogsPanel";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { Minus, Square, X } from "lucide-react";
+// Electron API types are declared in client/src/types/electron.d.ts
 
 export default function Dashboard() {
   const [layoutMode, setLayoutMode] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
@@ -130,21 +131,21 @@ export default function Dashboard() {
   }, [layoutMode]);
 
   // Window control functions for custom title bar
-  const minimizeWindow = () => {
+  const minimizeWindow = async () => {
     if (window.electronAPI) {
-      window.electronAPI.minimize();
+      await window.electronAPI.minimizeWindow();
     }
   };
 
-  const maximizeWindow = () => {
+  const maximizeWindow = async () => {
     if (window.electronAPI) {
-      window.electronAPI.maximize();
+      await window.electronAPI.maximizeWindow();
     }
   };
 
-  const closeWindow = () => {
+  const closeWindow = async () => {
     if (window.electronAPI) {
-      window.electronAPI.close();
+      await window.electronAPI.closeWindow();
     }
   };
 

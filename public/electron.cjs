@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('path');
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -18,19 +18,109 @@ function createWindow() {
       nodeIntegration: false,
       contextIsolation: true,
       enableRemoteModule: false,
-      webSecurity: true
+      webSecurity: true,
+      preload: path.join(__dirname, 'preload.js')
     },
     icon: path.join(__dirname, '../assets/icon.png'),
     titleBarStyle: 'hidden', // Completely hide title bar
-    show: false, // Keep hidden until size is calculated
+    show: false, // Keep hidden until content is loaded
     backgroundColor: '#0a0a0a' // Dark background to prevent white flash
   });
 
-  // Show window immediately for debugging
-  mainWindow.show();
-  
-  // Open DevTools for debugging
-  mainWindow.webContents.openDevTools();
+  // Show window when content is ready
+  mainWindow.once('ready-to-show', () => {
+    console.log('Window ready to show');
+    mainWindow.show();
+    
+    if (isDev) {
+      mainWindow.webContents.openDevTools();
+    }
+  });
+
+  // Auto-resize window to fit content without making it smaller
+  mainWindow.webContents.on('did-finish-load', () => {
+    console.log('Page loaded successfully');
+    
+    // Wait for content to render
+    setTimeout(() => {
+      mainWindow.webContents.executeJavaScript(`
+        (function() {
+          try {
+            // Find the main content container
+            const mainElement = document.querySelector('main');
+            const gridContainer = document.querySelector('.grid-container') || 
+                                 document.querySelector('[class*="grid"]') ||
+                                 document.querySelector('.flex');
+            
+            let contentHeight, contentWidth;
+            
+            if (gridContainer) {
+              // Try to measure the actual grid container first
+              const rect = gridContainer.getBoundingClientRect();
+              const styles = window.getComputedStyle(gridContainer);
+              contentHeight = rect.height;
+              contentWidth = rect.width;
+              console.log('📏 Grid container rect:', rect.width + 'x' + rect.height);
+              console.log('📏 Grid container padding:', styles.paddingTop, styles.paddingBottom);
+              console.log('📏 Grid container margin:', styles.marginTop, styles.marginBottom);
+              console.log('📏 Grid container size:', contentWidth + 'x' + contentHeight);
+              
+              // Also check for any elements below the grid
+              const allElements = document.querySelectorAll('*');
+              let maxBottom = 0;
+              allElements.forEach(el => {
+                if (el.offsetParent !== null) { // Only visible elements
+                  const rect = el.getBoundingClientRect();
+                  if (rect.bottom > maxBottom) {
+                    maxBottom = rect.bottom;
+                  }
+                }
+              });
+              console.log('📍 Max bottom position of all visible elements:', maxBottom);
+              
+              // Use the actual bottom position for height
+              contentHeight = maxBottom;
+              console.log('📏 Using max bottom position for height:', contentHeight);
+            } else if (mainElement) {
+              // Fallback to main element
+              const rect = mainElement.getBoundingClientRect();
+              contentHeight = rect.height;
+              contentWidth = rect.width;
+              console.log('📏 Main element size:', contentWidth + 'x' + contentHeight);
+            } else {
+              console.log('❌ No suitable container found');
+              return null;
+            }
+            
+            // Only resize based on content, not current window size
+            // Add minimal padding for better appearance
+            const newWidth = Math.max(contentWidth + 80, 1400);  // Reduced padding
+            const newHeight = 750; // Fixed height as requested
+            
+            // Cap at maximum sizes
+            const finalWidth = Math.min(newWidth, 1920);
+            const finalHeight = newHeight; // Fixed height
+            
+            console.log('📐 Final window size:', finalWidth + 'x' + finalHeight);
+            
+            return { width: Math.round(finalWidth), height: Math.round(finalHeight) };
+          } catch (error) {
+            console.log('❌ Error in measurement:', error);
+            return null;
+          }
+        })()
+      `).then((contentSize) => {
+        if (contentSize && contentSize.width && contentSize.height) {
+          console.log(`✅ Setting window size to ${contentSize.width}x${contentSize.height}`);
+          mainWindow.setSize(contentSize.width, contentSize.height, false);
+          mainWindow.center();
+          mainWindow.show();
+        }
+      }).catch((error) => {
+        console.log('❌ Could not get content size:', error);
+      });
+    }, 2000); // Wait longer for content to render
+  });
 
   // Load the app with retry logic
   const startUrl = 'http://localhost:4000'; // Always use dev server for desktop app
@@ -42,6 +132,7 @@ function createWindow() {
   const maxRetries = 10;
   
   function loadApp() {
+    console.log(`Attempt ${retryCount + 1}/${maxRetries} - Loading URL:`, startUrl);
     mainWindow.loadURL(startUrl).catch(() => {
       retryCount++;
       if (retryCount < maxRetries) {
@@ -294,6 +385,36 @@ function createMenu() {
   const menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
 }
+
+// IPC handlers for window controls
+ipcMain.on('minimize-window', () => {
+  if (mainWindow) {
+    mainWindow.minimize();
+  }
+});
+
+ipcMain.on('maximize-window', () => {
+  if (mainWindow) {
+    if (mainWindow.isMaximized()) {
+      mainWindow.unmaximize();
+    } else {
+      mainWindow.maximize();
+    }
+  }
+});
+
+ipcMain.on('close-window', () => {
+  if (mainWindow) {
+    mainWindow.close();
+  }
+});
+
+ipcMain.handle('is-maximized', () => {
+  if (mainWindow) {
+    return mainWindow.isMaximized();
+  }
+  return false;
+});
 
 // App event handlers
 app.whenReady().then(createWindow);
