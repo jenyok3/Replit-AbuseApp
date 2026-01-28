@@ -80,7 +80,7 @@ export const settingsSqlite = sqliteTable("settings", {
 });
 
 // Helper to get the right tables based on environment
-export const isSqlite = !process.env.DATABASE_URL;
+export const isSqlite = typeof process === 'undefined' || !process.env.DATABASE_URL;
 export const projectsTable = isSqlite ? projectsSqlite : projects;
 export const accountsTable = isSqlite ? accountsSqlite : accounts;
 export const dailyTasksTable = isSqlite ? dailyTasksSqlite : dailyTasks;

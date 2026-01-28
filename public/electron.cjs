@@ -26,6 +26,12 @@ function createWindow() {
     backgroundColor: '#0a0a0a' // Dark background to prevent white flash
   });
 
+  // Show window immediately for debugging
+  mainWindow.show();
+  
+  // Open DevTools for debugging
+  mainWindow.webContents.openDevTools();
+
   // Load the app with retry logic
   const startUrl = 'http://localhost:4000'; // Always use dev server for desktop app
   
@@ -52,16 +58,18 @@ function createWindow() {
   loadApp();
 
   // Window will be shown after size calculation in did-finish-load
-  // mainWindow.once('ready-to-show', () => {
-  //   console.log('Window ready to show');
-  //   mainWindow.show();
-  //   
-  //   if (isDev) {
-  //     mainWindow.webContents.openDevTools();
-  //   }
-  // });
+  mainWindow.once('ready-to-show', () => {
+    console.log('Window ready to show');
+    mainWindow.show();
+    
+    if (isDev) {
+      mainWindow.webContents.openDevTools();
+    }
+  });
 
-  // Auto-resize window to fit content
+  // Remove auto-resize logic to prevent layout distortion
+  // Comment out the entire did-finish-load handler
+  /*
   mainWindow.webContents.on('did-finish-load', () => {
     console.log('Page loaded successfully');
     
@@ -226,6 +234,7 @@ function createWindow() {
       });
     }, 2500); // Wait longer for all JavaScript to complete
   });
+  */
 
   // Handle page load events
   mainWindow.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {

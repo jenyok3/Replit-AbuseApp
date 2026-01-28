@@ -19,7 +19,7 @@ export default function Dashboard() {
       
       // Determine layout mode based on width
       let newLayoutMode: 'desktop' | 'tablet' | 'mobile';
-      if (width >= 1300) { // Changed from 1400 to 1300
+      if (width >= 1200) { // Changed from 1300 to 1200 for better desktop support
         newLayoutMode = 'desktop';
       } else if (width >= 768) {
         newLayoutMode = 'tablet';
@@ -31,12 +31,14 @@ export default function Dashboard() {
       setLayoutMode(newLayoutMode);
     };
 
-    // Only set initial layout mode, don't listen for resize
-    // Electron will handle window sizing
+    // Set initial layout mode
     handleResize();
     
+    // Add resize listener for responsive behavior
+    window.addEventListener('resize', handleResize);
+    
     return () => {
-      // No cleanup needed since we're not adding event listener
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
@@ -154,35 +156,37 @@ export default function Dashboard() {
         <div className="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px]" />
       </div>
 
-      <main className="relative z-10 max-w-[1920px] mx-auto h-full p-4 md:p-6 lg:p-8 responsive-container main-container prevent-overflow">
-        {/* Custom Window Controls */}
-        <div className="absolute top-2 right-2 z-50 flex gap-1">
-          <button
-            onClick={minimizeWindow}
-            className="w-8 h-8 flex items-center justify-center rounded-lg bg-yellow-500/20 hover:bg-yellow-500/30 transition-colors"
-            title="Minimize"
-          >
-            <Minus className="w-4 h-4 text-yellow-400" />
-          </button>
-          <button
-            onClick={maximizeWindow}
-            className="w-8 h-8 flex items-center justify-center rounded-lg bg-green-500/20 hover:bg-green-500/30 transition-colors"
-            title="Maximize"
-          >
-            <Square className="w-4 h-4 text-green-400" />
-          </button>
-          <button
-            onClick={closeWindow}
-            className="w-8 h-8 flex items-center justify-center rounded-lg bg-red-500/20 hover:bg-red-500/30 transition-colors"
-            title="Close"
-          >
-            <X className="w-4 h-4 text-red-400" />
-          </button>
-        </div>
-        
+      <main className="relative z-10 max-w-[1920px] mx-auto h-full pt-12 px-4 md:px-6 lg:px-8 pb-4 md:pb-6 lg:pb-8 responsive-container main-container prevent-overflow">
         {/* Layout Mode Indicator - for testing */}
-        <div className="absolute top-2 left-2 z-50 bg-black/50 backdrop-blur-sm rounded-lg px-3 py-1 text-xs text-white/70">
-          {layoutMode === 'desktop' ? '🖥️ Desktop' : layoutMode === 'tablet' ? '📱 Tablet' : '📱 Mobile'} ({containerWidth}px)
+        <div className="absolute top-2 left-2 right-2 z-50 bg-black/50 backdrop-blur-sm rounded-lg px-3 py-1 text-xs text-white/70 flex items-center justify-between">
+          <span>
+            {layoutMode === 'desktop' ? '🖥️ Desktop' : layoutMode === 'tablet' ? '📱 Tablet' : '📱 Mobile'} ({containerWidth}px)
+          </span>
+          
+          {/* Window Controls */}
+          <div className="flex gap-1">
+            <button
+              onClick={minimizeWindow}
+              className="w-6 h-6 flex items-center justify-center rounded transition-colors"
+              title="Minimize"
+            >
+              <Minus className="w-3 h-3 text-white/70 hover:text-white/90 transition-colors" />
+            </button>
+            <button
+              onClick={maximizeWindow}
+              className="w-6 h-6 flex items-center justify-center rounded transition-colors"
+              title="Maximize"
+            >
+              <Square className="w-3 h-3 text-white/70 hover:text-white/90 transition-colors" />
+            </button>
+            <button
+              onClick={closeWindow}
+              className="w-6 h-6 flex items-center justify-center rounded transition-colors"
+              title="Close"
+            >
+              <X className="w-3 h-3 text-white/70 hover:text-white/90 transition-colors" />
+            </button>
+          </div>
         </div>
         
         {layoutMode === 'desktop' ? (
@@ -254,7 +258,7 @@ export default function Dashboard() {
           </div>
         ) : layoutMode === 'tablet' ? (
           // Tablet Layout - Launch Panel full width, Stats & Daily side by side below, then Logs & Add Project
-          <div className="h-full overflow-y-auto smooth-scroll custom-scrollbar">
+          <div className="h-full overflow-y-auto smooth-scroll custom-scrollbar pr-4">
             <div className="flex flex-col gap-6 min-h-full grid-container">
               
               {/* Launch Panel - Full width */}
@@ -289,7 +293,7 @@ export default function Dashboard() {
               </div>
 
               {/* Logs & Add Project - Side by side */}
-              <div className="grid grid-cols-1 lg:grid-cols-[1fr_250px] gap-6 w-full grid-container">
+              <div className="grid grid-cols-1 md:grid-cols-[1fr_250px] gap-6 w-full grid-container">
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -315,7 +319,7 @@ export default function Dashboard() {
           </div>
         ) : (
           // Mobile Layout - Everything stacked vertically
-          <div className="h-full overflow-y-auto smooth-scroll custom-scrollbar">
+          <div className="h-full overflow-y-auto smooth-scroll custom-scrollbar pr-4">
             <div className="flex flex-col gap-4 min-h-full grid-container">
               
               {/* Launch Panel - Full width */}
