@@ -159,13 +159,13 @@ export default function Dashboard() {
 
       <main className="relative z-10 max-w-[1920px] mx-auto h-full pt-12 px-4 md:px-6 lg:px-8 pb-4 md:pb-6 lg:pb-8 responsive-container main-container prevent-overflow">
         {/* Layout Mode Indicator - for testing */}
-        <div className="absolute top-2 left-2 right-2 z-50 bg-black/50 backdrop-blur-sm rounded-lg px-3 py-1 text-xs text-white/70 flex items-center justify-between">
-          <span>
+        <div className="absolute top-2 left-2 right-2 z-50 bg-black/50 backdrop-blur-sm rounded-lg px-3 py-1 text-xs text-white/70 flex items-center justify-between app-drag-region">
+          <span className="app-no-drag">
             {layoutMode === 'desktop' ? '🖥️ Desktop' : layoutMode === 'tablet' ? '📱 Tablet' : '📱 Mobile'} ({containerWidth}px)
           </span>
           
           {/* Window Controls */}
-          <div className="flex gap-1">
+          <div className="flex gap-1 app-no-drag">
             <button
               onClick={minimizeWindow}
               className="w-6 h-6 flex items-center justify-center rounded transition-colors"

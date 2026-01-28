@@ -6,12 +6,16 @@ import {
   Chrome, 
   Users, 
   LogOut,
-  Bug
+  Bug,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useSidebar } from "@/components/ui/sidebar";
 
 export function Sidebar() {
   const [location] = useLocation();
+  const { state, toggleSidebar } = useSidebar();
 
   const navItems = [
     { icon: Settings, label: "Налаштування", href: "/settings" },
@@ -22,31 +26,69 @@ export function Sidebar() {
   const type: "telegram" | "chrome" = "telegram"; // This could be state-driven
 
   return (
-    <div className="w-20 lg:w-64 h-screen border-r border-white/5 bg-black/95 flex flex-col shrink-0 transition-all duration-300">
+    <div className={cn(
+      "h-screen border-r border-white/5 bg-black/95 flex flex-col shrink-0 transition-all duration-300 relative",
+      state === "collapsed" ? "w-16" : "w-20 lg:w-64"
+    )}>
+      {/* Toggle Button on Right Border */}
+      <button
+        onClick={toggleSidebar}
+        className={cn(
+          "absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-50",
+          "w-6 h-12 bg-black/90 border border-white/10 rounded-l-lg",
+          "flex items-center justify-center text-white/60 hover:text-white/80",
+          "transition-all duration-300 hover:bg-black/95 hover:border-white/20",
+          "backdrop-blur-sm"
+        )}
+      >
+        {state === "collapsed" ? (
+          <ChevronRight className="w-3 h-3" />
+        ) : (
+          <ChevronLeft className="w-3 h-3" />
+        )}
+      </button>
+
       {/* Header / Logo Area */}
-      <div className="h-20 flex items-center justify-center lg:justify-start lg:px-6 border-b border-white/5">
-        <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
+      <div className={cn(
+        "h-20 flex items-center justify-center lg:justify-start border-b border-white/5",
+        state === "collapsed" ? "" : "lg:pl-[11px]"
+      )}>
+        <div className={cn(
+          "w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20",
+          state === "collapsed" ? "ml-[11px]" : ""
+        )}>
           <Bug className="text-white w-6 h-6" />
         </div>
-        <span className="ml-3 font-display font-bold text-lg hidden lg:block tracking-wide">
+        <span className={cn(
+          "ml-3 font-display font-bold text-lg tracking-wide transition-all duration-300",
+          state === "collapsed" ? "hidden" : "hidden lg:block"
+        )}>
           Abuse<span className="text-primary">App</span>
         </span>
       </div>
 
       {/* Farm Type Switcher */}
-      <div className="p-4 space-y-2">
+      <div className={cn(
+        "space-y-2 transition-all duration-300",
+        state === "collapsed" ? "px-1" : "p-4"
+      )}>
         <Link href="/">
           <Button 
             variant="ghost" 
             className={cn(
-              "w-full justify-center lg:justify-start gap-3 h-12 rounded-xl transition-all relative overflow-hidden",
+              "w-full justify-start gap-3 h-12 rounded-xl transition-all relative overflow-hidden",
               isDashboardActive && type === "telegram" 
                 ? "bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20" 
                 : "text-muted-foreground hover:bg-white/5 hover:text-white"
             )}
           >
             <Send className="w-5 h-5 text-primary" />
-            <span className="hidden lg:block font-medium">Telegram</span>
+            <span className={cn(
+              "font-medium transition-all duration-300",
+              state === "collapsed" ? "hidden" : "hidden lg:block"
+            )}>
+              Telegram
+            </span>
             {isDashboardActive && type === "telegram" && (
               <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-r-full" />
             )}
@@ -57,14 +99,19 @@ export function Sidebar() {
           <Button 
             variant="ghost" 
             className={cn(
-              "w-full justify-center lg:justify-start gap-3 h-12 rounded-xl transition-all relative overflow-hidden",
+              "w-full justify-start gap-3 h-12 rounded-xl transition-all relative overflow-hidden",
               location === "/chrome"
                 ? "bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20" 
                 : "text-muted-foreground hover:bg-white/5 hover:text-white"
             )}
           >
             <Chrome className="w-5 h-5 text-primary" />
-            <span className="hidden lg:block font-medium">Chrome</span>
+            <span className={cn(
+              "font-medium transition-all duration-300",
+              state === "collapsed" ? "hidden" : "hidden lg:block"
+            )}>
+              Chrome
+            </span>
             {location === "/chrome" && (
               <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-r-full" />
             )}
@@ -72,10 +119,18 @@ export function Sidebar() {
         </Link>
       </div>
 
-      <div className="h-px bg-white/5 mx-4 my-2" />
+      <div className={cn(
+        "bg-white/5 transition-all duration-300",
+        state === "collapsed" ? "mx-1" : "mx-4"
+      )}>
+        <div className="h-px" />
+      </div>
 
       {/* Navigation */}
-      <nav className="flex-1 p-4 space-y-2">
+      <nav className={cn(
+        "flex-1 space-y-2 transition-all duration-300",
+        state === "collapsed" ? "px-1 py-2" : "p-4"
+      )}>
         {navItems.map((item) => (
           <Link key={item.href} href={item.href} className={cn(
             "flex items-center justify-center lg:justify-start gap-3 px-3 py-3 rounded-xl transition-all duration-200 group relative overflow-hidden",
@@ -84,10 +139,15 @@ export function Sidebar() {
               : "text-muted-foreground hover:text-white hover:bg-white/5"
           )}>
             <item.icon className={cn(
-              "w-5 h-5 transition-transform duration-300 group-hover:scale-110",
+              "w-5 h-5 transition-transform duration-300 group-hover:scale-102",
               "text-primary"
             )} />
-            <span className="hidden lg:block font-medium">{item.label}</span>
+            <span className={cn(
+              "font-medium transition-all duration-300",
+              state === "collapsed" ? "hidden" : "hidden lg:block"
+            )}>
+              {item.label}
+            </span>
             
             {location === item.href && (
               <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-r-full" />
@@ -97,14 +157,23 @@ export function Sidebar() {
       </nav>
 
       {/* Footer / User Profile */}
-      <div className="p-4 border-t border-white/5">
+      <div className={cn(
+        "border-t border-white/5 transition-all duration-300",
+        state === "collapsed" ? "p-1" : "p-4"
+      )}>
         <button className="flex items-center justify-center lg:justify-start gap-3 w-full p-2 rounded-xl hover:bg-white/5 transition-colors group">
           <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-zinc-700 to-zinc-600 border border-white/10" />
-          <div className="hidden lg:flex flex-col items-start overflow-hidden">
+          <div className={cn(
+            "flex flex-col items-start overflow-hidden transition-all duration-300",
+            state === "collapsed" ? "hidden" : "hidden lg:flex"
+          )}>
             <span className="text-sm font-medium text-white truncate w-full">Administrator</span>
             <span className="text-xs text-muted-foreground">admin@abuseapp.io</span>
           </div>
-          <LogOut className="w-4 h-4 ml-auto text-muted-foreground group-hover:text-red-400 hidden lg:block" />
+          <LogOut className={cn(
+            "w-4 h-4 text-muted-foreground group-hover:text-red-400 transition-all duration-300",
+            state === "collapsed" ? "hidden" : "hidden lg:block"
+          )} />
         </button>
       </div>
     </div>
