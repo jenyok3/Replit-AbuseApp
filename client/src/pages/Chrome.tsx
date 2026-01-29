@@ -6,7 +6,7 @@ import { LogsPanel, AddProjectDialog } from "@/components/LogsPanel";
 import { useState, useEffect } from "react";
 // Electron API types are declared in client/src/types/electron.d.ts
 
-export default function Dashboard() {
+export default function Chrome() {
   const [layoutMode, setLayoutMode] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
   const [containerWidth, setContainerWidth] = useState(0);
 
@@ -44,17 +44,17 @@ export default function Dashboard() {
 
   return (
     <div className="flex-1 overflow-hidden relative font-body text-white">
-      {/* Background ambient effects */}
+      {/* Background ambient effects - Chrome themed */}
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[10%] left-[20%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px]" />
-        <div className="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px]" />
+        <div className="absolute top-[10%] left-[20%] w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[100px]" />
+        <div className="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] bg-yellow-500/5 rounded-full blur-[100px]" />
       </div>
 
       <main className="relative z-10 max-w-[1920px] mx-auto h-full pt-12 px-4 md:px-6 lg:px-8 pb-4 md:pb-6 lg:pb-8 responsive-container main-container prevent-overflow">
         {/* Layout Mode Indicator - for testing */}
         <div className="absolute top-2 left-2 right-2 z-50 bg-black/50 backdrop-blur-sm rounded-lg px-3 py-1 text-xs text-white/70 flex items-center justify-between app-drag-region">
           <span className="app-no-drag">
-            {layoutMode === 'desktop' ? '🖥️ Desktop' : layoutMode === 'tablet' ? '📱 Tablet' : '📱 Mobile'} ({containerWidth}px)
+            🌐 Chrome {layoutMode === 'desktop' ? '🖥️ Desktop' : layoutMode === 'tablet' ? '📱 Tablet' : '📱 Mobile'} ({containerWidth}px)
           </span>
         </div>
         

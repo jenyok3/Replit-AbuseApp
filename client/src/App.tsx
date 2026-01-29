@@ -10,6 +10,7 @@ import Dashboard from "@/pages/Dashboard";
 import TestSimple from "./test-simple";
 import Accounts from "@/pages/Accounts";
 import Settings from "@/pages/Settings";
+import Chrome from "@/pages/Chrome";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -19,6 +20,7 @@ function Router() {
       <Route path="/test" component={TestSimple} />
       <Route path="/accounts" component={Accounts} />
       <Route path="/projects" component={Dashboard} />
+      <Route path="/chrome" component={Chrome} />
       <Route path="/settings" component={Settings} />
       <Route component={NotFound} />
     </Switch>

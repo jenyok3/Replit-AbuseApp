@@ -87,7 +87,7 @@ export default function Settings() {
         <div className="absolute top-[10%] left-[20%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px]" />
       </div>
 
-      <main className="relative z-10 max-w-2xl mx-auto space-y-8 p-4 md:p-6 lg:p-8 h-full overflow-y-auto smooth-scroll custom-scrollbar" onClick={handleContainerClick}>
+      <main className="relative z-10 max-w-2xl mx-auto space-y-8 pl-4 md:pl-6 lg:pl-8 pr-0 h-full overflow-y-auto smooth-scroll custom-scrollbar" onClick={handleContainerClick}>
         <div className="flex items-center gap-3 mb-8 app-no-drag">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Налаштування</h1>
@@ -95,7 +95,7 @@ export default function Settings() {
           </div>
         </div>
 
-        <div className="space-y-6 app-no-drag pb-8">
+        <div className="space-y-6 app-no-drag pr-4 md:pr-6 lg:pr-8">
           {/* Telegram Settings */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -183,6 +183,23 @@ export default function Settings() {
                 />
               </div>
             </div>
+          </motion.div>
+
+          {/* Save Button */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="flex justify-end pt-8 pb-8 sticky bottom-0 bg-black/80 backdrop-blur-sm rounded-t-2xl -ml-4 -mr-4 pl-4 pr-4 md:-ml-6 md:-mr-6 md:pl-6 md:pr-6 lg:-ml-8 lg:-mr-8 lg:pl-8 lg:pr-8"
+          >
+            <Button 
+              onClick={handleSave}
+              disabled={!hasChanges || mutation.isPending}
+              className="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed app-no-drag"
+            >
+              <Save className="w-4 h-4 mr-2" />
+              {mutation.isPending ? "Збереження..." : "Зберегти"}
+            </Button>
           </motion.div>
         </div>
       </main>
