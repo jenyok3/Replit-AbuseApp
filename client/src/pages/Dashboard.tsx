@@ -1,10 +1,9 @@
+import { motion } from "framer-motion";
 import { LaunchPanel } from "@/components/LaunchPanel";
 import { StatsPanel } from "@/components/StatsPanel";
 import { DailyTasksPanel } from "@/components/DailyTasksPanel";
 import { LogsPanel, AddProjectDialog } from "@/components/LogsPanel";
-import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import { Minus, Square, X } from "lucide-react";
 // Electron API types are declared in client/src/types/electron.d.ts
 
 export default function Dashboard() {
@@ -43,112 +42,6 @@ export default function Dashboard() {
     };
   }, []);
 
-  // Function to adjust widget heights to match AddProject square
-  const adjustWidgetHeights = () => {
-    console.log('🔧 adjustWidgetHeights called');
-    
-    const addProjectElement = document.querySelector('[data-add-project-widget]') as HTMLElement;
-    console.log('📦 AddProject element found:', !!addProjectElement);
-    
-    if (!addProjectElement) {
-      console.log('❌ AddProject element not found!');
-      return;
-    }
-
-    // Force a small delay to ensure the element is rendered
-    setTimeout(() => {
-      const addProjectHeight = addProjectElement.offsetHeight;
-      console.log('📏 AddProject height:', addProjectHeight); // Debug log
-      
-      // Get the bottom position of AddProject widget
-      const addProjectRect = addProjectElement.getBoundingClientRect();
-      const addProjectBottom = addProjectRect.bottom;
-      console.log('📍 AddProject bottom position:', addProjectBottom);
-      
-      // Adjust Daily widget height to match the bottom line
-      const dailyContainer = document.querySelector('[data-daily-widget]') as HTMLElement;
-      console.log('📅 Daily element found:', !!dailyContainer);
-      
-      if (dailyContainer) {
-        const dailyRect = dailyContainer.getBoundingClientRect();
-        const dailyTop = dailyRect.top;
-        const neededHeight = addProjectBottom - dailyTop;
-        
-        console.log('📍 Daily top position:', dailyTop);
-        console.log('📏 Daily needed height:', neededHeight);
-        
-        dailyContainer.style.height = `${neededHeight}px`;
-        dailyContainer.style.minHeight = `${neededHeight}px`;
-        console.log('✅ Daily height set to:', neededHeight); // Debug log
-      } else {
-        console.log('❌ Daily element not found!');
-      }
-      
-      // Keep Logs widget at the same height as AddProject (square)
-      const logsContainer = document.querySelector('[data-logs-widget]') as HTMLElement;
-      console.log('📋 Logs element found:', !!logsContainer);
-      
-      if (logsContainer) {
-        logsContainer.style.height = `${addProjectHeight}px`;
-        logsContainer.style.minHeight = `${addProjectHeight}px`;
-        console.log('✅ Logs height set to:', addProjectHeight); // Debug log
-      } else {
-        console.log('❌ Logs element not found!');
-      }
-    }, 50);
-  };
-
-  // Use effect to adjust heights after mount and on resize
-  useEffect(() => {
-    console.log('🚀 useEffect setup for layoutMode:', layoutMode);
-    
-    // Multiple attempts with longer delays to ensure proper sizing
-    const timers = [
-      setTimeout(() => {
-        console.log('⏰ Timer 1: 200ms');
-        adjustWidgetHeights();
-      }, 200),
-      setTimeout(() => {
-        console.log('⏰ Timer 2: 500ms');
-        adjustWidgetHeights();
-      }, 500),
-      setTimeout(() => {
-        console.log('⏰ Timer 3: 800ms');
-        adjustWidgetHeights();
-      }, 800),
-      setTimeout(() => {
-        console.log('⏰ Timer 4: 1200ms');
-        adjustWidgetHeights();
-      }, 1200)
-    ];
-
-    // Remove resize listener to prevent infinite loop
-    // The window is already auto-sized by Electron
-    
-    return () => {
-      timers.forEach(timer => clearTimeout(timer));
-    };
-  }, [layoutMode]);
-
-  // Window control functions for custom title bar
-  const minimizeWindow = async () => {
-    if (window.electronAPI) {
-      await window.electronAPI.minimizeWindow();
-    }
-  };
-
-  const maximizeWindow = async () => {
-    if (window.electronAPI) {
-      await window.electronAPI.maximizeWindow();
-    }
-  };
-
-  const closeWindow = async () => {
-    if (window.electronAPI) {
-      await window.electronAPI.closeWindow();
-    }
-  };
-
   return (
     <div className="flex-1 overflow-hidden relative font-body text-white">
       {/* Background ambient effects */}
@@ -163,31 +56,6 @@ export default function Dashboard() {
           <span className="app-no-drag">
             {layoutMode === 'desktop' ? '🖥️ Desktop' : layoutMode === 'tablet' ? '📱 Tablet' : '📱 Mobile'} ({containerWidth}px)
           </span>
-          
-          {/* Window Controls */}
-          <div className="flex gap-1 app-no-drag">
-            <button
-              onClick={minimizeWindow}
-              className="w-6 h-6 flex items-center justify-center rounded transition-colors"
-              title="Minimize"
-            >
-              <Minus className="w-3 h-3 text-white/70 hover:text-white/90 transition-colors" />
-            </button>
-            <button
-              onClick={maximizeWindow}
-              className="w-6 h-6 flex items-center justify-center rounded transition-colors"
-              title="Maximize"
-            >
-              <Square className="w-3 h-3 text-white/70 hover:text-white/90 transition-colors" />
-            </button>
-            <button
-              onClick={closeWindow}
-              className="w-6 h-6 flex items-center justify-center rounded transition-colors"
-              title="Close"
-            >
-              <X className="w-3 h-3 text-white/70 hover:text-white/90 transition-colors" />
-            </button>
-          </div>
         </div>
         
         {layoutMode === 'desktop' ? (
@@ -201,22 +69,24 @@ export default function Dashboard() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
-                className="flex-none widget-hover"
+                className="flex-none widget-hover w-full"
+                style={{ aspectRatio: '1.92 / 1' }}
               >
                 <LaunchPanel />
               </motion.div>
 
               {/* Bottom Row - 2 Widgets - Natural height without pressure */}
-              <div className="grid grid-cols-1 md:grid-cols-[1fr_250px] gap-6 items-end">
+              <div className="grid grid-cols-1 md:grid-cols-[1.93fr_1fr] gap-6 items-stretch">
                 {/* Logs Widget - Natural height based on content */}
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.1 }}
-                  className="flex flex-col"
+                  className="flex flex-col w-full"
                   data-logs-widget
+                  style={{ aspectRatio: '1.93 / 1' }}
                 >
-                  <div className="bg-card/40 backdrop-blur-sm border border-white/5 rounded-3xl p-6 flex flex-col overflow-hidden">
+                  <div className="bg-card/40 backdrop-blur-sm border border-white/5 rounded-3xl p-6 flex flex-col overflow-hidden h-full">
                     <LogsPanel hideAddProject />
                   </div>
                 </motion.div>
@@ -226,10 +96,11 @@ export default function Dashboard() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.2 }}
-                  className="aspect-square flex-shrink-0 widget-hover"
+                  className="widget-hover w-full"
                   data-add-project-widget
+                  style={{ aspectRatio: '1 / 1' }}
                 >
-                  <AddProjectWidget />
+                  <AddProjectDialog variant="widget" />
                 </motion.div>
               </div>
             </div>
@@ -240,7 +111,8 @@ export default function Dashboard() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.4 }}
-                className="flex-none widget-hover"
+                className="flex-none widget-hover w-full"
+                style={{ aspectRatio: '1.22 / 1' }}
               >
                 <StatsPanel />
               </motion.div>
@@ -250,8 +122,9 @@ export default function Dashboard() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.3 }}
-                className="widget-hover overflow-hidden"
+                className="widget-hover overflow-hidden w-full row-span-2 flex-1"
                 data-daily-widget
+                style={{ aspectRatio: '3 / 4', minHeight: '150px' }}
               >
                 <DailyTasksPanel />
               </motion.div>
@@ -268,6 +141,7 @@ export default function Dashboard() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
                 className="w-full flex-shrink-0 widget-hover"
+                style={{ aspectRatio: '1.92 / 1' }}
               >
                 <LaunchPanel />
               </motion.div>
@@ -278,7 +152,8 @@ export default function Dashboard() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.1 }}
-                  className="w-full h-[250px] min-widget-size widget-hover widget-responsive"
+                  className="w-full widget-hover widget-responsive"
+                  style={{ aspectRatio: '1.22 / 1' }}
                 >
                   <StatsPanel />
                 </motion.div>
@@ -287,19 +162,21 @@ export default function Dashboard() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.2 }}
-                  className="w-full h-[250px] min-widget-size widget-hover widget-responsive"
+                  className="w-full widget-hover widget-responsive"
+                  style={{ aspectRatio: '3 / 4', minHeight: '150px' }}
                 >
                   <DailyTasksPanel />
                 </motion.div>
               </div>
 
               {/* Logs & Add Project - Side by side */}
-              <div className="grid grid-cols-1 md:grid-cols-[1fr_250px] gap-6 w-full grid-container">
+              <div className="grid grid-cols-1 md:grid-cols-[1.93fr_1fr] gap-6 w-full grid-container items-end">
                 <motion.div 
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.3 }}
-                  className="w-full h-[250px] widget-hover"
+                  className="w-full widget-hover"
+                  style={{ aspectRatio: '1.93 / 1' }}
                 >
                   <div className="bg-card/40 backdrop-blur-sm border border-white/5 rounded-3xl p-6 h-full custom-scrollbar overflow-hidden">
                     <LogsPanel hideAddProject />
@@ -310,10 +187,11 @@ export default function Dashboard() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.4 }}
-                  className="w-[250px] h-[250px] flex-shrink-0 widget-hover"
+                  className="w-full widget-hover"
+                  style={{ aspectRatio: '1 / 1' }}
                   data-add-project-widget
                 >
-                  <AddProjectWidget />
+                  <AddProjectDialog variant="widget" />
                 </motion.div>
               </div>
             </div>
@@ -329,6 +207,7 @@ export default function Dashboard() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
                 className="w-full flex-shrink-0 widget-hover"
+                style={{ aspectRatio: '1.92 / 1' }}
               >
                 <LaunchPanel />
               </motion.div>
@@ -338,7 +217,8 @@ export default function Dashboard() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.1 }}
-                className="w-full h-[350px] min-widget-size widget-hover widget-responsive"
+                className="w-full widget-hover widget-responsive"
+                style={{ aspectRatio: '1.22 / 1' }}
               >
                 <StatsPanel />
               </motion.div>
@@ -348,7 +228,8 @@ export default function Dashboard() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.2 }}
-                className="w-full h-[250px] min-widget-size widget-hover widget-responsive"
+                className="w-full widget-hover widget-responsive"
+                style={{ aspectRatio: '3 / 4', minHeight: '150px' }}
               >
                 <DailyTasksPanel />
               </motion.div>
@@ -358,10 +239,11 @@ export default function Dashboard() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.3 }}
-                className="w-full h-[250px] widget-hover"
+                className="w-full widget-hover"
+                style={{ aspectRatio: '1 / 1' }}
                 data-add-project-widget
               >
-                <AddProjectWidget />
+                <AddProjectDialog variant="widget" />
               </motion.div>
 
               {/* Logs Panel - Full width */}
@@ -369,7 +251,8 @@ export default function Dashboard() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.4 }}
-                className="w-full h-[250px] widget-hover"
+                className="w-full widget-hover"
+                style={{ aspectRatio: '1.93 / 1' }}
               >
                 <div className="bg-card/40 backdrop-blur-sm border border-white/5 rounded-3xl p-6 h-full custom-scrollbar overflow-hidden">
                   <LogsPanel hideAddProject />
@@ -379,14 +262,6 @@ export default function Dashboard() {
           </div>
         )}
       </main>
-    </div>
-  );
-}
-
-function AddProjectWidget() {
-  return (
-    <div className="h-full w-full">
-      <AddProjectDialog variant="widget" />
     </div>
   );
 }

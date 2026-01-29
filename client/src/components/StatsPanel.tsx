@@ -1,6 +1,7 @@
 import { useStats } from "@/hooks/use-dashboard";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
-import { Activity, ShieldCheck, Ghost, Layers } from "lucide-react";
+import { Activity, ShieldCheck, Layers } from "lucide-react";
+import { BlockedIcon } from "@/components/icons/BlockedIcon";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useLocation } from "wouter";
 
@@ -18,7 +19,7 @@ export function StatsPanel() {
   }
 
   return (
-    <div className="bg-card/40 backdrop-blur-sm border border-white/5 rounded-3xl p-6 lg:p-8 flex flex-col h-full">
+    <div className="bg-card/40 backdrop-blur-sm border border-white/5 rounded-3xl p-6 lg:p-8 flex flex-col h-full w-full">
       <h2 className="text-lg font-display font-bold text-white mb-6 flex items-center gap-2 whitespace-nowrap">
         <Activity className="text-primary w-5 h-5 shrink-0" />
         Статистика акаунтів
@@ -66,7 +67,7 @@ export function StatsPanel() {
             <span className="text-xl font-mono font-bold text-white">{stats?.liveAccounts || 0}</span>
           </div>
           <div className="flex items-center gap-3">
-            <Ghost className="w-5 h-5 text-slate-400" />
+            <BlockedIcon className="w-5 h-5 text-slate-400" />
             <span className="text-xl font-mono font-bold text-white">{stats?.blockedAccounts || 0}</span>
           </div>
         </div>

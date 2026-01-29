@@ -69,31 +69,40 @@ export default function Settings() {
     });
   };
 
+  // Handle click outside to remove focus from inputs
+  const handleContainerClick = (e: React.MouseEvent) => {
+    // Check if click is on input or label
+    const target = e.target as HTMLElement;
+    if (!target.closest('input, label, button')) {
+      // Remove focus from all inputs
+      (document.activeElement as HTMLInputElement)?.blur();
+    }
+  };
+
   if (isLoading) return null;
 
   return (
-    <div className="flex-1 overflow-hidden relative font-body text-white">
+    <div className="flex-1 overflow-hidden relative font-body text-white app-drag-region">
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
         <div className="absolute top-[10%] left-[20%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px]" />
       </div>
 
-      <main className="relative z-10 max-w-2xl mx-auto space-y-8 p-4 md:p-6 lg:p-8">
-        <div className="flex items-center gap-3 mb-8">
+      <main className="relative z-10 max-w-2xl mx-auto space-y-8 p-4 md:p-6 lg:p-8 h-full overflow-y-auto smooth-scroll custom-scrollbar" onClick={handleContainerClick}>
+        <div className="flex items-center gap-3 mb-8 app-no-drag">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Налаштування</h1>
             <p className="text-muted-foreground">Керування параметрами системи</p>
           </div>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-6 app-no-drag pb-8">
           {/* Telegram Settings */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="bg-card/40 backdrop-blur-sm border border-white/5 rounded-3xl p-8 space-y-6"
           >
-            <h2 className="text-xl font-semibold flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-blue-500" />
+            <h2 className="text-xl font-semibold">
               Telegram
             </h2>
             <div className="space-y-4">
@@ -101,6 +110,9 @@ export default function Settings() {
                 <Label htmlFor="telegramThreads" className="text-sm font-medium text-zinc-400">
                   Кількість потоків
                 </Label>
+                <div className="text-xs text-zinc-500">
+                  Вкажіть кількість одночасних потоків для Telegram
+                </div>
                 <Input
                   id="telegramThreads"
                   type="number"
@@ -114,6 +126,9 @@ export default function Settings() {
                 <Label htmlFor="telegramFolderPath" className="text-sm font-medium text-zinc-400">
                   Шлях до папки з акаунтами
                 </Label>
+                <div className="text-xs text-zinc-500">
+                  Вкажіть повний шлях до папки з акаунтами Telegram
+                </div>
                 <Input
                   id="telegramFolderPath"
                   value={telegramFolderPath}
@@ -132,8 +147,7 @@ export default function Settings() {
             transition={{ delay: 0.1 }}
             className="bg-card/40 backdrop-blur-sm border border-white/5 rounded-3xl p-8 space-y-6"
           >
-            <h2 className="text-xl font-semibold flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-orange-500" />
+            <h2 className="text-xl font-semibold">
               Chrome
             </h2>
             <div className="space-y-4">
@@ -141,6 +155,9 @@ export default function Settings() {
                 <Label htmlFor="chromeThreads" className="text-sm font-medium text-zinc-400">
                   Кількість потоків
                 </Label>
+                <div className="text-xs text-zinc-500">
+                  Вкажіть кількість одночасних потоків для Chrome
+                </div>
                 <Input
                   id="chromeThreads"
                   type="number"
@@ -154,6 +171,9 @@ export default function Settings() {
                 <Label htmlFor="chromeFolderPath" className="text-sm font-medium text-zinc-400">
                   Шлях до папки з акаунтами
                 </Label>
+                <div className="text-xs text-zinc-500">
+                  Вкажіть повний шлях до папки з акаунтами Chrome
+                </div>
                 <Input
                   id="chromeFolderPath"
                   value={chromeFolderPath}
@@ -164,23 +184,6 @@ export default function Settings() {
               </div>
             </div>
           </motion.div>
-
-          {hasChanges && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="pt-4"
-            >
-              <Button 
-                onClick={handleSave}
-                disabled={mutation.isPending}
-                className="w-full h-12 rounded-xl bg-primary hover:bg-primary/90 text-white font-bold transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2"
-              >
-                <Save className="w-5 h-5" />
-                {mutation.isPending ? "Збереження..." : "Зберегти зміни"}
-              </Button>
-            </motion.div>
-          )}
         </div>
       </main>
     </div>

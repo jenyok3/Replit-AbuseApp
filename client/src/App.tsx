@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Sidebar } from "@/components/Sidebar";
+import { WindowControls } from "@/components/WindowControls";
 import Dashboard from "@/pages/Dashboard";
 import TestSimple from "./test-simple";
 import Accounts from "@/pages/Accounts";
@@ -35,6 +36,7 @@ function App() {
               <Router />
             </div>
           </div>
+          <WindowControls />
         </SidebarProvider>
         <Toaster />
       </TooltipProvider>

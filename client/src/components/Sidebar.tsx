@@ -1,15 +1,7 @@
-import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
-import { 
-  Settings, 
-  Send, 
-  Chrome, 
-  Users, 
-  LogOut,
-  Bug,
-  ChevronLeft,
-  ChevronRight
-} from "lucide-react";
+import { Link, useLocation } from "wouter";
+import { Home, Send, Chrome, Settings, ChevronLeft, ChevronRight, LogOut } from "lucide-react";
+import { AppIcon } from "@/components/icons/AppIcon";
 import { Button } from "@/components/ui/button";
 import { useSidebar } from "@/components/ui/sidebar";
 
@@ -57,7 +49,7 @@ export function Sidebar() {
           "w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20",
           state === "collapsed" ? "ml-[11px]" : ""
         )}>
-          <Bug className="text-white w-6 h-6" />
+          <AppIcon className="text-white w-6 h-6" />
         </div>
         <span className={cn(
           "ml-3 font-display font-bold text-lg tracking-wide transition-all duration-300",

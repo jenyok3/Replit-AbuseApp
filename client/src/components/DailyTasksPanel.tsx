@@ -25,7 +25,7 @@ export function DailyTasksPanel() {
   };
 
   return (
-    <div className="bg-card/40 backdrop-blur-sm border border-white/5 rounded-3xl p-6 flex flex-col h-full">
+    <div className="bg-card/40 backdrop-blur-sm border border-white/5 rounded-3xl p-6 flex flex-col h-full w-full">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-display font-bold text-white flex items-center gap-2">
           <CheckSquare className="text-primary w-5 h-5" />
@@ -76,21 +76,23 @@ export function DailyTasksPanel() {
         </div>
       </ScrollArea>
       
-      <form onSubmit={handleCreate} className="mt-4 flex gap-2">
-        <Input 
-          value={newTaskTitle}
-          onChange={(e) => setNewTaskTitle(e.target.value)}
-          placeholder="New task..."
-          className="bg-black/50 border-white/10 text-sm h-10"
-        />
-        <Button 
-          type="submit" 
-          disabled={isCreating || !newTaskTitle.trim()}
-          size="icon"
-          className="h-10 w-10 shrink-0 bg-white/10 hover:bg-primary hover:text-white"
-        >
-          {isCreating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
-        </Button>
+      <form onSubmit={handleCreate} className="mt-4">
+        <div className="relative group">
+          <Input 
+            value={newTaskTitle}
+            onChange={(e) => setNewTaskTitle(e.target.value)}
+            placeholder="Додати нове завдання..."
+            className="bg-black/50 border-white/10 text-sm h-10 rounded-xl pr-12 w-full transition-all duration-300 focus:border-primary/50 focus:bg-black/60"
+          />
+          <Button 
+            type="submit" 
+            disabled={isCreating || !newTaskTitle.trim()}
+            size="icon"
+            className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 shrink-0 bg-transparent/20 backdrop-blur-sm border border-white/10 rounded-lg hover:bg-primary/20 hover:text-white hover:border-primary/30 transition-all duration-300 group-hover:bg-primary/10"
+          >
+            {isCreating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
+          </Button>
+        </div>
       </form>
     </div>
   );

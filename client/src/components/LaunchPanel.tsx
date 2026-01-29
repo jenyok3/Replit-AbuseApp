@@ -44,7 +44,7 @@ export function LaunchPanel() {
   };
 
   return (
-    <div className="bg-card/40 backdrop-blur-sm border border-white/5 rounded-3xl p-6 lg:p-8 flex flex-col relative overflow-hidden group">
+    <div className="bg-card/40 backdrop-blur-sm border border-white/5 rounded-3xl p-6 lg:p-8 flex flex-col relative overflow-hidden group h-full w-full">
       {/* Decorative background glow */}
       <div className="absolute -top-20 -right-20 w-64 h-64 bg-primary/20 rounded-full blur-3xl group-hover:bg-primary/30 transition-all duration-700 pointer-events-none" />
 
@@ -53,7 +53,7 @@ export function LaunchPanel() {
         Масовий запуск
       </h2>
 
-      <div className="space-y-4">
+      <div className="space-y-4 flex-1">
         <div className="space-y-2">
           <Label className="text-muted-foreground text-xs uppercase tracking-wider font-bold">Проект</Label>
           <Select value={selectedProject} onValueChange={setSelectedProject}>
