@@ -1,18 +1,21 @@
 "use client"
 
+import dynamic from "next/dynamic";
 import { Switch, Route } from "wouter";
 import { queryClient } from "@/lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { Sidebar } from "@/components/Sidebar";
-import { WindowControls } from "@/components/WindowControls";
-import Dashboard from "@/pages/Dashboard";
-import Accounts from "@/pages/Accounts";
-import Settings from "@/pages/Settings";
-import Chrome from "@/pages/Chrome";
-import NotFound from "@/pages/not-found";
+
+// Dynamic imports to avoid SSR issues with localStorage
+const Sidebar = dynamic(() => import("@/components/Sidebar").then(mod => ({ default: mod.Sidebar })), { ssr: false });
+const WindowControls = dynamic(() => import("@/components/WindowControls").then(mod => ({ default: mod.WindowControls })), { ssr: false });
+const Dashboard = dynamic(() => import("@/pages/Dashboard"), { ssr: false });
+const Accounts = dynamic(() => import("@/pages/Accounts"), { ssr: false });
+const Settings = dynamic(() => import("@/pages/Settings"), { ssr: false });
+const Chrome = dynamic(() => import("@/pages/Chrome"), { ssr: false });
+const NotFound = dynamic(() => import("@/pages/not-found"), { ssr: false });
 
 function Router() {
   return (
