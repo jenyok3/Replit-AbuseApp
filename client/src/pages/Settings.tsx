@@ -79,6 +79,57 @@ export default function Settings() {
     }
   };
 
+  // Apply responsive padding to cards
+  useEffect(() => {
+    const main = document.querySelector('main') as HTMLElement;
+    const container = document.querySelector('.space-y-6') as HTMLElement;
+    if (main && container) {
+      // Force reset main element styles
+      main.style.marginLeft = '0px !important';
+      main.style.marginRight = '0px !important';
+      main.style.paddingLeft = '32px !important';
+      main.style.paddingRight = '0px !important';
+      main.style.borderLeft = '0px !important';
+      main.style.borderRight = '0px !important';
+      main.style.outlineOffset = '0px';
+      
+      // Force apply with higher priority
+      main.setAttribute('style', main.getAttribute('style') + '; margin-left: 0px !important; margin-right: 0px !important; padding-left: 32px !important; padding-right: 0px !important;');
+      
+      // Reset container styles
+      container.style.marginLeft = '0px !important';
+      container.style.marginRight = '0px !important';
+      container.style.paddingLeft = '0px !important';
+      container.style.paddingRight = '0px !important';
+      container.style.borderLeft = '0px !important';
+      container.style.borderRight = '0px !important';
+      container.style.outlineOffset = '0px';
+      
+      // Apply responsive padding to cards
+      const cardElements = container.querySelectorAll('.bg-card\\/40') as NodeListOf<HTMLElement>;
+      const containerWidth = container.offsetWidth;
+      const cardPadding = Math.max(32, Math.min(96, containerWidth * 0.12));
+      
+      cardElements.forEach((card: HTMLElement) => {
+        card.style.marginLeft = `${cardPadding}px !important`;
+        card.style.marginRight = `${cardPadding}px !important`;
+        card.style.paddingLeft = `${cardPadding}px !important`;
+        card.style.paddingRight = `${cardPadding}px !important`;
+      });
+      
+      // Force apply with higher priority if needed
+      setTimeout(() => {
+        cardElements.forEach((card: HTMLElement) => {
+          const currentPaddingRight = window.getComputedStyle(card).paddingRight;
+          const currentPaddingLeft = window.getComputedStyle(card).paddingLeft;
+          if (currentPaddingRight !== `${cardPadding}px` || currentPaddingLeft !== `${cardPadding}px`) {
+            card.setAttribute('style', card.getAttribute('style') + `; padding-right: ${cardPadding}px !important; margin-right: ${cardPadding}px !important; padding-left: ${cardPadding}px !important; margin-left: ${cardPadding}px !important;`);
+          }
+        });
+      }, 200);
+    }
+  }, []);
+
   if (isLoading) return null;
 
   return (
@@ -87,20 +138,20 @@ export default function Settings() {
         <div className="absolute top-[10%] left-[20%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px]" />
       </div>
 
-      <main className="relative z-10 max-w-2xl mx-auto space-y-8 pl-4 md:pl-6 lg:pl-8 pr-0 h-full overflow-y-auto smooth-scroll custom-scrollbar" onClick={handleContainerClick}>
-        <div className="flex items-center gap-3 mb-8 app-no-drag">
+      <main className="relative z-10 max-w-2xl mx-auto space-y-8 pl-4 md:pl-6 lg:pl-8 pr-0 h-full overflow-y-auto smooth-scroll custom-scrollbar app-drag-region" onClick={handleContainerClick}>
+        <div className="flex items-center gap-3 mb-8 mt-16 app-no-drag">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Налаштування</h1>
             <p className="text-muted-foreground">Керування параметрами системи</p>
           </div>
         </div>
 
-        <div className="space-y-6 app-no-drag pr-4 md:pr-6 lg:pr-8">
+        <div className="space-y-6 app-drag-region pr-0 mr-0">
           {/* Telegram Settings */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-card/40 backdrop-blur-sm border border-white/5 rounded-3xl p-8 space-y-6"
+            className="bg-card/40 backdrop-blur-sm border border-white/5 rounded-3xl p-8 space-y-6 app-no-drag"
           >
             <h2 className="text-xl font-semibold">
               Telegram
@@ -145,7 +196,7 @@ export default function Settings() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="bg-card/40 backdrop-blur-sm border border-white/5 rounded-3xl p-8 space-y-6"
+            className="bg-card/40 backdrop-blur-sm border border-white/5 rounded-3xl p-8 space-y-6 app-no-drag"
           >
             <h2 className="text-xl font-semibold">
               Chrome
@@ -190,7 +241,7 @@ export default function Settings() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="flex justify-end pt-8 pb-8 sticky bottom-0 bg-black/80 backdrop-blur-sm rounded-t-2xl -ml-4 -mr-4 pl-4 pr-4 md:-ml-6 md:-mr-6 md:pl-6 md:pr-6 lg:-ml-8 lg:-mr-8 lg:pl-8 lg:pr-8"
+            className="flex justify-end pt-8 pb-8 app-no-drag"
           >
             <Button 
               onClick={handleSave}
